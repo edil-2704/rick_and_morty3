@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "980492932072",
+    "firebase_url": "https://rick-n-morty-4c652-default-rtdb.firebaseio.com",
+    "project_id": "rick-n-morty-4c652",
+    "storage_bucket": "rick-n-morty-4c652.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:980492932072:android:bb627bfbb8bb87c0f00a5d",
+        "android_client_info": {
+          "package_name": "com.yourdomain.rickandmorty"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLiZj8jBIEwOQld2vj1y2XPqRFNsPjNXE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
