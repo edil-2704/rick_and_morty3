@@ -14,10 +14,10 @@ class SplashScreen2 extends StatefulWidget {
 class _SplashScreen2State extends State<SplashScreen2> {
   @override
   void initState() {
-    Timer(Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => LoginScreen(),
+          builder: (context) => const LoginScreen(),
         ),
       );
     });
@@ -39,7 +39,7 @@ class _SplashScreen2State extends State<SplashScreen2> {
       backgroundColor: Colors.green,
       body: Center(
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/images/splash2.png'),
             ),

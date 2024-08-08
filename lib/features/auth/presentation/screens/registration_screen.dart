@@ -52,13 +52,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(Icons.arrow_back_outlined),
+          icon: const Icon(Icons.arrow_back_outlined),
         ),
       ),
       body: BlocBuilder<AuthBloc, AuthState>(
         bloc: registrationBloc,
         builder: (context, state) {
-          log('state is ${state}');
+          log('state is $state');
           
           if (state is AuthErrorState) {
             return Center(
@@ -80,44 +80,44 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Создать аккаунт',
                       style: TextStyle(
                         fontSize: 40,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    CommonTextWidget(tittle: 'Name'),
+                    const CommonTextWidget(tittle: 'Name'),
                     TextFieldWidget(
                       controller: nameController,
                       hintText: 'Name',
                     ),
-                    CommonTextWidget(tittle: 'Surname'),
+                    const CommonTextWidget(tittle: 'Surname'),
                     TextFieldWidget(
                       controller: nameController,
                       hintText: 'Surname',
                     ),
-                    CommonTextWidget(tittle: 'Lastname'),
+                    const CommonTextWidget(tittle: 'Lastname'),
                     TextFieldWidget(
                       controller: nameController,
                       hintText: 'Lastname',
                     ),
-                    SizedBox(height: 10),
-                    Divider(height: 5),
-                    SizedBox(height: 10),
-                    CommonTextWidget(tittle: 'Login'),
+                    const SizedBox(height: 10),
+                    const Divider(height: 5),
+                    const SizedBox(height: 10),
+                    const CommonTextWidget(tittle: 'Login'),
                     TextFieldWidget(
                       controller: nameController,
                       hintText: 'Login',
-                      prefixIcon: Icon(Icons.person),
+                      prefixIcon: const Icon(Icons.person),
                     ),
-                    CommonTextWidget(tittle: 'Password'),
+                    const CommonTextWidget(tittle: 'Password'),
                     TextFieldWidget(
                       controller: nameController,
                       hintText: 'Password',
-                      prefixIcon: Icon(Icons.password_rounded),
+                      prefixIcon: const Icon(Icons.password_rounded),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     ElevatedButtonWidget(
                         onPressed: () {
                           registrationBloc.add(
@@ -136,7 +136,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               ),
             );
           }
-          return SizedBox();
+          return const SizedBox();
         },
       ),
     );
@@ -154,7 +154,7 @@ class CommonTextWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       tittle,
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w500,
       ),

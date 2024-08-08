@@ -15,8 +15,8 @@ class SearchWidget extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hintText,
         fillColor: Colors.grey.shade300,
-        suffixIcon: Icon(Icons.filter_alt_outlined),
-        prefixIcon: Icon(Icons.search_rounded),
+        suffixIcon: const Icon(Icons.filter_alt_outlined),
+        prefixIcon: const Icon(Icons.search_rounded),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(100),
           borderSide: BorderSide.none,

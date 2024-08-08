@@ -43,7 +43,7 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         child: Column(
           children: [
             BlocConsumer<CharacterBloc, CharacterState>(
@@ -58,7 +58,7 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
                 }
 
                 if (state is CharacterLoadingState) {
-                  Center(
+                  const Center(
                     child: CircularProgressIndicator(),
                   );
                 }
@@ -109,7 +109,7 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
-                                  icon: Icon(
+                                  icon: const Icon(
                                     Icons.arrow_back_outlined,
                                     color: Colors.white,
                                   ),
@@ -130,7 +130,7 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
                                       ),
                                       fit: BoxFit.cover,
                                     ),
-                                    borderRadius: BorderRadius.all(
+                                    borderRadius: const BorderRadius.all(
                                       Radius.circular(73),
                                     ),
                                     border: Border.all(
@@ -143,12 +143,12 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
                             ],
                           ),
                         ),
-                        SizedBox(height: 60),
+                        const SizedBox(height: 60),
                         Text(
                           state.result.name ?? '',
                           style: TextHelper.mainCharInfo,
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         Text(
                           statusConverter(
                                   state.result.status ?? Status.ALIVE) ??
@@ -158,11 +158,11 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
                                   ? AppColors.mainGreen
                                   : AppColors.mainRed),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         SizedBox(
                           child: TextHelper.charDescription,
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         Row(
                           children: [
                             Expanded(
@@ -179,10 +179,10 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
                                     '${speciesConverter(state.result.species ?? Species.HUMAN)}',
                               ),
                             ),
-                            SizedBox(width: 60),
+                            const SizedBox(width: 60),
                           ],
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         InkWell(
                           splashFactory: NoSplash.splashFactory,
                           onTap: () {},
@@ -195,7 +195,7 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
                               ),
                               IconButton(
                                 onPressed: () {},
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.arrow_forward_ios_outlined,
                                   size: 24,
                                 ),
@@ -203,7 +203,7 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
                             ],
                           ),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         InkWell(
                           splashFactory: NoSplash.splashFactory,
                           onTap: () {},
@@ -216,7 +216,7 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
                               ),
                               IconButton(
                                 onPressed: () {},
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.arrow_forward_ios_outlined,
                                   size: 24,
                                 ),
@@ -224,12 +224,12 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
                             ],
                           ),
                         ),
-                        SizedBox(height: 20),
-                        Divider(
+                        const SizedBox(height: 20),
+                        const Divider(
                           height: 5,
                           color: AppColors.mainGrey,
                         ),
-                        SizedBox(height: 30),
+                        const SizedBox(height: 30),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -247,7 +247,7 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
                           shrinkWrap: true,
                           itemCount: state.result.episode?.length ?? 0,
                           itemBuilder: (context, index) {
-                            return Column(
+                            return const Column(
                               children: [
                                 Row(
                                     // children: [Container(decoration:  ,)],

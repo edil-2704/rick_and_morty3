@@ -20,7 +20,7 @@ class CommonCharDataWidget extends StatelessWidget {
           tittle,
           style: TextHelper.charSexText,
         ),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         Text(
           subTittle,
           style: TextHelper.charGenderText,

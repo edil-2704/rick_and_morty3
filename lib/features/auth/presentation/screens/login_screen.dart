@@ -58,29 +58,29 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 Text(S.of(context).login),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextFieldWidget(
                   controller: loginController,
-                  hintText: '${S.of(context).login}',
-                  prefixIcon: Icon(Icons.person),
+                  hintText: S.of(context).login,
+                  prefixIcon: const Icon(Icons.person),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(S.of(context).password),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                TextFieldWidget(
                   controller: passwordController,
                   hintText: 'Password',
-                  suffixIcon: Icon(Icons.visibility_off_sharp),
-                  prefixIcon: Icon(Icons.person),
+                  suffixIcon: const Icon(Icons.visibility_off_sharp),
+                  prefixIcon: const Icon(Icons.person),
                 ),
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 BlocListener<AuthBloc, AuthState>(
                   bloc: authBloc,
                   listener: (context, state) {
                     print(state);
                     if (state is AuthLoadedState) {
                       ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text('daaaaa')));
+                          .showSnackBar(const SnackBar(content: Text('daaaaa')));
                     }
                   },
                   child: ElevatedButtonWidget(
@@ -99,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     title: S.of(context).create,
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Container(
                   alignment: Alignment.bottomCenter,
                   height: 20,
@@ -107,20 +107,20 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: RichText(
                     text: TextSpan(
                       text: 'У вас еще нет аккаунта?  ',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Color(0xff5B6975),
                       ),
                       children: [
                         TextSpan(
-                          text: '${S.of(context).create}',
-                          style: TextStyle(
+                          text: S.of(context).create,
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Color(0xff43D049),
                           ),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => RegistrationScreen()));
+                                  builder: (context) => const RegistrationScreen()));
                             },
                         ),
                       ],

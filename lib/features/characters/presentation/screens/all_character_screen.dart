@@ -40,7 +40,7 @@ class _AllCharacterScreenState extends State<AllCharacterScreen> {
               SearchWidget(
                 searchTextController: searchTextController, hintText: 'Найти персонажа',
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               Row(
                 children: [
                   Expanded(
@@ -65,7 +65,7 @@ class _AllCharacterScreenState extends State<AllCharacterScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Expanded(
                 child: BlocConsumer<CharacterBloc, CharacterState>(
                     bloc: characterBloc,
@@ -79,14 +79,14 @@ class _AllCharacterScreenState extends State<AllCharacterScreen> {
                       }
 
                       if (state is CharacterLoadingState) {
-                        Center(
+                        const Center(
                           child: CircularProgressIndicator(),
                         );
                       }
                     },
                     builder: (context, state) {
                       if (state is CharacterLoadingState) {
-                        return Center(
+                        return const Center(
                           child: CircularProgressIndicator(),
                         );
                       }
@@ -106,11 +106,11 @@ class _AllCharacterScreenState extends State<AllCharacterScreen> {
                               );
                       }
                       if (state is CharacterErrorState) {
-                        return Center(
+                        return const Center(
                           child: Text('Failed to load characters'),
                         );
                       }
-                      return Center(
+                      return const Center(
                         child: Text('No characters found'),
                       );
                     }),

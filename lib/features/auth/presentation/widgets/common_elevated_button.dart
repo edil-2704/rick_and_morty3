@@ -13,16 +13,16 @@ class ElevatedButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
-      child: Text(title),
       style: ElevatedButton.styleFrom(
         splashFactory: NoSplash.splashFactory,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
-        backgroundColor: Color(0xff22A2BD),
+        backgroundColor: const Color(0xff22A2BD),
         foregroundColor: Colors.white,
         minimumSize: Size(MediaQuery.of(context).size.width, 48),
       ),
+      child: Text(title),
     );
   }
 }

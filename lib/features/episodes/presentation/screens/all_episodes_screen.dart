@@ -44,7 +44,7 @@ class _AllEpisodesScreenState extends State<AllEpisodesScreen> {
                 bloc: bloc,
                 listener: (context, state) {
                   if (state is EpisodesLoadingState) {
-                    Center(
+                    const Center(
                       child: CircularProgressIndicator(),
                     );
                   }
@@ -73,11 +73,11 @@ class _AllEpisodesScreenState extends State<AllEpisodesScreen> {
                         );
                       },
                       separatorBuilder: (context, index) {
-                        return SizedBox(height: 16);
+                        return const SizedBox(height: 16);
                       },
                     );
                   }
-                  return SizedBox();
+                  return const SizedBox();
                 },
               ),
             ],

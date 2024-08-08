@@ -47,7 +47,7 @@ class ToListViewSeparated extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(width: 20),
+                  const SizedBox(width: 20),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -79,7 +79,7 @@ class ToListViewSeparated extends StatelessWidget {
           );
         },
         separatorBuilder: (context, index) {
-          return SizedBox(height: 15);
+          return const SizedBox(height: 15);
         },
       ),
     );
