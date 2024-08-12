@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rick_and_morty/features/auth/presentation/logic/bloc/auth_bloc.dart';
 import 'package:rick_and_morty/features/auth/presentation/widgets/common_elevated_button.dart';
-import 'package:rick_and_morty/internal/components/texr_field.dart';
+import 'package:rick_and_morty/internal/components/common_text_field.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -30,23 +30,24 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   final AuthBloc registrationBloc = AuthBloc();
 
-  @override
-  void initState() {
-    registrationBloc.add(
-      RegisterEvent(
-        name: nameController.text,
-        surname: secondNameController.text,
-        patronym: lastNameController.text,
-        email: emailController.text,
-        password: passwordController.text,
-      ),
-    );
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   registrationBloc.add(
+  //     RegisterEvent(
+  //       name: nameController.text,
+  //       surname: secondNameController.text,
+  //       patronym: lastNameController.text,
+  //       email: emailController.text,
+  //       password: passwordController.text,
+  //     ),
+  //   );
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
@@ -59,7 +60,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         bloc: registrationBloc,
         builder: (context, state) {
           log('state is $state');
-          
+
           if (state is AuthErrorState) {
             return Center(
               child: Text('Error: ${state.error.message}'),
@@ -94,12 +95,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ),
                     const CommonTextWidget(tittle: 'Surname'),
                     TextFieldWidget(
-                      controller: nameController,
+                      controller: secondNameController,
                       hintText: 'Surname',
                     ),
                     const CommonTextWidget(tittle: 'Lastname'),
                     TextFieldWidget(
-                      controller: nameController,
+                      controller: lastNameController,
                       hintText: 'Lastname',
                     ),
                     const SizedBox(height: 10),
@@ -107,13 +108,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     const SizedBox(height: 10),
                     const CommonTextWidget(tittle: 'Login'),
                     TextFieldWidget(
-                      controller: nameController,
+                      controller: emailController,
                       hintText: 'Login',
                       prefixIcon: const Icon(Icons.person),
                     ),
                     const CommonTextWidget(tittle: 'Password'),
                     TextFieldWidget(
-                      controller: nameController,
+                      controller: passwordController,
                       hintText: 'Password',
                       prefixIcon: const Icon(Icons.password_rounded),
                     ),
@@ -122,9 +123,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         onPressed: () {
                           registrationBloc.add(
                             RegisterEvent(
-                              name: nameController.text,
-                              surname: secondNameController.text,
-                              patronym: lastNameController.text,
                               email: emailController.text,
                               password: passwordController.text,
                             ),
@@ -145,6 +143,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
 class CommonTextWidget extends StatelessWidget {
   final String tittle;
+
   const CommonTextWidget({
     super.key,
     required this.tittle,

@@ -6,7 +6,7 @@ import 'package:rick_and_morty/features/auth/presentation/logic/bloc/auth_bloc.d
 import 'package:rick_and_morty/features/auth/presentation/screens/registration_screen.dart';
 import 'package:rick_and_morty/features/auth/presentation/widgets/common_elevated_button.dart';
 import 'package:rick_and_morty/generated/l10n.dart';
-import 'package:rick_and_morty/internal/components/texr_field.dart';
+import 'package:rick_and_morty/internal/components/common_text_field.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -29,20 +29,21 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  @override
-  void initState() {
-    authBloc.add(
-      LoginEvent(
-        name: loginController.text,
-        passwordToLogin: passwordController.text,
-      ),
-    );
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   authBloc.add(
+  //     LoginEvent(
+  //       name: loginController.text,
+  //       passwordToLogin: passwordController.text,
+  //     ),
+  //   );
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Center(
@@ -67,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 10),
                 Text(S.of(context).password),
                 const SizedBox(height: 10),
-               TextFieldWidget(
+                TextFieldWidget(
                   controller: passwordController,
                   hintText: 'Password',
                   suffixIcon: const Icon(Icons.visibility_off_sharp),
@@ -78,9 +79,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   bloc: authBloc,
                   listener: (context, state) {
                     print(state);
+
                     if (state is AuthLoadedState) {
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(const SnackBar(content: Text('daaaaa')));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('daaaaa')));
                     }
                   },
                   child: ElevatedButtonWidget(
@@ -120,7 +122,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const RegistrationScreen()));
+                                  builder: (context) =>
+                                      const RegistrationScreen()));
                             },
                         ),
                       ],

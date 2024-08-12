@@ -1,3 +1,4 @@
+import 'package:rick_and_morty/features/characters/data/models/characters_models.dart';
 import 'package:rick_and_morty/features/location/data/models/location_model.dart';
 import 'package:rick_and_morty/features/location/domain/location_repository/location_repository.dart';
 
@@ -6,15 +7,18 @@ import 'package:rick_and_morty/features/location/domain/location_repository/loca
 /// RU: [LocationUseCase] - Юзкейс для работы location
 
 class LocationUseCase {
-  final LocationRepository locationRepostory;
+  final LocationRepository locationRepositories;
 
-  LocationUseCase({required this.locationRepostory});
+  LocationUseCase({required this.locationRepositories});
 
   Future<LocationModel> getAllLocations() async {
-    return await locationRepostory.getAllLocations();
+    return await locationRepositories.getAllLocations();
   }
 
   Future<LocationResult> getLocationsById({required int id}) async {
-    return await locationRepostory.getLocationsById(id: id);
+    return await locationRepositories.getLocationsById(id: id);
+  }
+  Future<List<CharacterResult>> getResident(LocationResult result) async {
+    return await locationRepositories.getResidents(result);
   }
 }

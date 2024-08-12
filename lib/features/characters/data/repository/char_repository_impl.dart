@@ -12,8 +12,8 @@ class CharRepositoryImpl implements CharRepository {
     try {
       Response response = await apiRequester.toGet('character');
 
-      print('getAllUsers = ${response.statusCode}');
-      print('getAllUsers = ${response.data}');
+      print('getAllCharacters = ${response.statusCode}');
+      print('getAllCharacters = ${response.data}');
 
       if (response.statusCode == 200) {
         return CharacterModel.fromJson(response.data);

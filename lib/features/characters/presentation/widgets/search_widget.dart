@@ -14,7 +14,7 @@ class SearchWidget extends StatelessWidget {
       controller: searchTextController,
       decoration: InputDecoration(
         hintText: hintText,
-        fillColor: Colors.grey.shade300,
+        fillColor: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
         suffixIcon: const Icon(Icons.filter_alt_outlined),
         prefixIcon: const Icon(Icons.search_rounded),
         border: OutlineInputBorder(

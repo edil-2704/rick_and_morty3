@@ -8,6 +8,8 @@ import 'package:rick_and_morty/features/characters/domain/char_use_case/char_use
 import 'package:rick_and_morty/features/characters/presentation/logic/bloc/character_bloc.dart';
 import 'package:rick_and_morty/features/characters/presentation/widgets/common_column_data.dart';
 import 'package:rick_and_morty/features/characters/presentation/widgets/enum_funcs.dart';
+import 'package:rick_and_morty/features/episodes/data/repository/episode_repository.dart';
+import 'package:rick_and_morty/features/episodes/domain/episode_use_case/episode_use_case.dart';
 import 'package:rick_and_morty/internal/constants/text_helper/text_helper.dart';
 import 'package:rick_and_morty/internal/constants/theme_helper/app_colors.dart';
 
@@ -24,23 +26,25 @@ class CharacterInfoScreen extends StatefulWidget {
 }
 
 class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
-
-  
   final CharacterBloc characterBloc = CharacterBloc(
     charUseCase: CharUseCase(
       charRepository: CharRepositoryImpl(),
+    ),
+    episodeUseCase: EpisodeUseCase(
+      episodeRepository: EpisodeRepositoryImpl(),
     ),
   );
 
   @override
   void initState() {
-    characterBloc.add(GetCharactersById(id: widget.id));
+    characterBloc.add(GetCharactersByIdEvent(id: widget.id));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
       extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
         physics: const NeverScrollableScrollPhysics(),
@@ -250,8 +254,10 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
                             return const Column(
                               children: [
                                 Row(
-                                    // children: [Container(decoration:  ,)],
-                                    )
+                                  children: [
+                                    Text(''),
+                                  ],
+                                )
                               ],
                             );
                           },

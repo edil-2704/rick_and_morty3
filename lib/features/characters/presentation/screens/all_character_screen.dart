@@ -6,6 +6,8 @@ import 'package:rick_and_morty/features/characters/presentation/logic/bloc/chara
 import 'package:rick_and_morty/features/characters/presentation/widgets/search_widget.dart';
 import 'package:rick_and_morty/features/characters/presentation/widgets/to_grid_view.dart';
 import 'package:rick_and_morty/features/characters/presentation/widgets/to_list_view.dart';
+import 'package:rick_and_morty/features/episodes/data/repository/episode_repository.dart';
+import 'package:rick_and_morty/features/episodes/domain/episode_use_case/episode_use_case.dart';
 import 'package:rick_and_morty/internal/constants/text_helper/text_helper.dart';
 
 class AllCharacterScreen extends StatefulWidget {
@@ -19,26 +21,34 @@ class _AllCharacterScreenState extends State<AllCharacterScreen> {
   TextEditingController searchTextController = TextEditingController();
 
   final CharacterBloc characterBloc = CharacterBloc(
-      charUseCase: CharUseCase(charRepository: CharRepositoryImpl()));
+    charUseCase: CharUseCase(
+      charRepository: CharRepositoryImpl(),
+    ),
+    episodeUseCase: EpisodeUseCase(
+      episodeRepository: EpisodeRepositoryImpl(),
+    ),
+  );
 
   bool isListView = true;
 
   @override
   void initState() {
-    characterBloc.add(GetAllCharacters());
+    characterBloc.add(GetAllCharactersEvent());
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: SafeArea(
           child: Column(
             children: [
               SearchWidget(
-                searchTextController: searchTextController, hintText: 'Найти персонажа',
+                searchTextController: searchTextController,
+                hintText: 'Найти персонажа',
               ),
               const SizedBox(height: 40),
               Row(
@@ -95,13 +105,13 @@ class _AllCharacterScreenState extends State<AllCharacterScreen> {
                             ? ToListViewSeparated(
                                 state: state,
                                 onRefresh: () {
-                                  characterBloc.add(GetAllCharacters());
+                                  characterBloc.add(GetAllCharactersEvent());
                                 },
                               )
                             : ToGridViewSeparated(
                                 state: state,
                                 onRefresh: () {
-                                  characterBloc.add(GetAllCharacters());
+                                  characterBloc.add(GetAllCharactersEvent());
                                 },
                               );
                       }

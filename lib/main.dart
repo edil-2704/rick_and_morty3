@@ -2,9 +2,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
 import 'package:rick_and_morty/features/auth/presentation/screens/login_screen.dart';
 import 'package:rick_and_morty/firebase_options.dart';
 import 'package:rick_and_morty/generated/l10n.dart';
+import 'package:rick_and_morty/internal/components/bottom_navbar.dart';
+import 'package:rick_and_morty/internal/constants/theme_mode/theme_provider.dart';
 import 'package:rick_and_morty/internal/helpers/localization/bloc/localization_bloc.dart';
 import 'package:rick_and_morty/internal/helpers/localization/localization_hive.dart';
 
@@ -17,7 +20,10 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => ThemeProvider(),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -57,11 +63,8 @@ class _MyAppState extends State<MyApp> {
             locale: Locale.fromSubtags(languageCode: locale ?? 'ru \$'),
             debugShowCheckedModeBanner: false,
             title: 'Flutter Demo',
-            theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-              useMaterial3: true,
-            ),
-            home: const LoginScreen(),
+            theme: Provider.of<ThemeProvider>(context).themeData,
+            home: const BottomNavBarScreen(),
           );
         },
       ),

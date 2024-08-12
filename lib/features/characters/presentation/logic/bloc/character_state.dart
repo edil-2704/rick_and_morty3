@@ -21,6 +21,18 @@ final class CharacterErrorState extends CharacterState {
 
 final class CharacterLoadedInfoState extends CharacterState {
   final CharacterResult result;
+  final List<EpisodeResult>? episodeResult;
 
-  CharacterLoadedInfoState({required this.result});
+  CharacterLoadedInfoState({
+    required this.result,
+    this.episodeResult,
+  });
+}
+
+final class CharacterLoadedEpisodeState extends CharacterState {
+  final List<EpisodeResult> episodeResult;
+
+  CharacterLoadedEpisodeState({
+    required this.episodeResult,
+  });
 }

@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
+import 'package:rick_and_morty/features/characters/data/models/characters_models.dart';
 import 'package:rick_and_morty/features/location/data/models/location_model.dart';
 import 'package:rick_and_morty/features/location/domain/location_repository/location_repository.dart';
 import 'package:rick_and_morty/internal/helpers/api_requester/api_requester.dart';
@@ -41,9 +42,29 @@ class LocationRepositoryImpl implements LocationRepository {
 
       throw response;
     } catch (e) {
-      log('getLocationsById = $e');
+      log('err getLocationsById = $e');
 
       throw CatchException.convertException(e);
     }
+  }
+
+  @override
+  Future<List<CharacterResult>> getResidents(LocationResult locationResidents) async {
+    List<CharacterResult> residentModelList = [];
+    try {
+      for (var element in locationResidents.residents ?? []) {
+        Response response = await apiRequester
+            .toGet('api/character/${element.replaceAll(RegExp('[^0-9]'), "")}');
+
+        residentModelList.add(CharacterResult.fromJson(response.data));
+      }
+      log("=" * 5);
+      log(residentModelList.toString());
+      return residentModelList;
+    } catch (e) {
+      print("error == $e");
+      throw CatchException.convertException(e);
+    }
+
   }
 }

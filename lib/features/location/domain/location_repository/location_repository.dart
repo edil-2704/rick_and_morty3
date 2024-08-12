@@ -1,3 +1,4 @@
+import 'package:rick_and_morty/features/characters/data/models/characters_models.dart';
 import 'package:rick_and_morty/features/location/data/models/location_model.dart';
 
 abstract class LocationRepository {
@@ -10,4 +11,10 @@ abstract class LocationRepository {
   ///
   /// RU: [getLocationsById] - получение locations по ID
   Future<LocationResult> getLocationsById({required int id});
+
+  ///RU: получение информацию о резидентах
+  ///
+  ///EN:getting information about residents
+
+  Future<List<CharacterResult>> getResidents(LocationResult locationResidents);
 }

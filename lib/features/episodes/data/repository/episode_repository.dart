@@ -27,6 +27,7 @@ class EpisodeRepositoryImpl implements EpisodeRepository {
 
   @override
   Future<EpisodeResult> getEpisodesById({required int id}) async {
+
     try {
       Response response = await apiRequester.toGet('episode/$id');
 

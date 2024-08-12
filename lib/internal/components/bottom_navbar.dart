@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rick_and_morty/features/characters/presentation/screens/all_character_screen.dart';
 import 'package:rick_and_morty/features/episodes/presentation/screens/all_episodes_screen.dart';
+import 'package:rick_and_morty/features/location/presentation/screens/all_location_screen.dart';
+import 'package:rick_and_morty/features/settings/screens/settings_screen.dart';
 import 'package:rick_and_morty/internal/constants/theme_helper/app_colors.dart';
 
 class BottomNavBarScreen extends StatefulWidget {
@@ -22,11 +24,11 @@ class _BottomNavBarState extends State<BottomNavBarScreen> {
     //персонажи
     AllCharacterScreen(),
     //локация
-    AllCharacterScreen(),
+    AllLocationScreen(),
     //Эпизоды
     AllEpisodesScreen(),
     //настройки
-    AllEpisodesScreen(),
+    SettingsScreen(),
   ];
 
   @override
@@ -34,10 +36,13 @@ class _BottomNavBarState extends State<BottomNavBarScreen> {
     return Scaffold(
       body: screens.elementAt(selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
         type: BottomNavigationBarType.fixed,
         showUnselectedLabels: true,
-        selectedItemColor: AppColors.mainBlue,
-        unselectedItemColor: AppColors.mainGrey,
+        selectedItemColor: Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
+        selectedIconTheme: Theme.of(context).bottomNavigationBarTheme.selectedIconTheme,
+        selectedLabelStyle: Theme.of(context).bottomNavigationBarTheme.selectedLabelStyle,
+
         items: const [
           BottomNavigationBarItem(
             icon: Icon(

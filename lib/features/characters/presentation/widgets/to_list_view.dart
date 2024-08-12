@@ -29,9 +29,13 @@ class ToListViewSeparated extends StatelessWidget {
               splashFactory: NoSplash.splashFactory,
               onTap: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => CharacterInfoScreen(id: state.characterModel.results?[index].id ?? 0,),),);
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CharacterInfoScreen(
+                      id: state.characterModel.results?[index].id ?? 0,
+                    ),
+                  ),
+                );
               },
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,7 +69,9 @@ class ToListViewSeparated extends StatelessWidget {
                       ),
                       Text(
                         state.characterModel.results?[index].name ?? '',
-                        style: TextHelper.mainChar,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       Text(
                         '${speciesConverter(state.characterModel.results?[index].species ?? Species.HUMAN) ?? ''}, ${genderConverter(state.characterModel.results?[index].gender ?? Gender.UNKNOWN) ?? ''}',

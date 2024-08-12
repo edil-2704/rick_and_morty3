@@ -3,10 +3,12 @@ part of 'character_bloc.dart';
 @immutable
 sealed class CharacterEvent {}
 
-class GetAllCharacters extends CharacterEvent {}
+class GetAllCharactersEvent extends CharacterEvent {}
 
-class GetCharactersById extends CharacterEvent {
+class GetCharactersByIdEvent extends CharacterEvent {
   final int id;
 
-  GetCharactersById({required this.id});
+  GetCharactersByIdEvent({required this.id});
 }
+
+class GetCharacterEpisodeEvent extends CharacterEvent {}

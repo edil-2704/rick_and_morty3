@@ -21,9 +21,9 @@ class _SplashScreen2State extends State<SplashScreen2> {
         ),
       );
     });
-    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+
     super.initState();
-    // Future.delayed(const Duration(seconds: 5), () {});
+
   }
 
   @override
@@ -36,7 +36,7 @@ class _SplashScreen2State extends State<SplashScreen2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Center(
         child: Container(
           decoration: const BoxDecoration(

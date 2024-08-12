@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class TextFieldWidget extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
+  final TextInputType? textInputType;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final bool? isObsecured;
@@ -14,22 +15,24 @@ class TextFieldWidget extends StatelessWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.isObsecured,
+    this.textInputType,
   });
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: controller,
+      keyboardType: textInputType,
+      autocorrect: false,
       decoration: InputDecoration(
-        fillColor: Colors.grey.shade300,
-        hintText: hintText,
-        prefixIcon: prefixIcon,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-           borderSide: BorderSide.none,
-        ),
-        filled: true
-      ),
+          fillColor: Colors.grey.shade300,
+          hintText: hintText,
+          prefixIcon: prefixIcon,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
+          ),
+          filled: true),
     );
   }
 }
