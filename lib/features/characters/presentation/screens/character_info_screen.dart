@@ -9,8 +9,10 @@ import 'package:rick_and_morty/features/characters/domain/char_use_case/char_use
 import 'package:rick_and_morty/features/characters/presentation/logic/bloc/character_bloc.dart';
 import 'package:rick_and_morty/features/characters/presentation/widgets/common_column_data.dart';
 import 'package:rick_and_morty/features/characters/presentation/widgets/enum_funcs.dart';
+import 'package:rick_and_morty/features/episodes/data/models/episode_image_model.dart';
 import 'package:rick_and_morty/features/episodes/data/repository/episode_repository.dart';
 import 'package:rick_and_morty/features/episodes/domain/episode_use_case/episode_use_case.dart';
+import 'package:rick_and_morty/features/episodes/presentation/screens/episodes_info_screen.dart';
 import 'package:rick_and_morty/internal/components/date_formatter.dart';
 import 'package:rick_and_morty/internal/constants/text_helper/text_helper.dart';
 import 'package:rick_and_morty/internal/constants/theme_helper/app_colors.dart';
@@ -28,6 +30,8 @@ class CharacterInfoScreen extends StatefulWidget {
 }
 
 class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
+  late ImagesEpisodeModel episodeModel;
+
   final CharacterBloc characterBloc = CharacterBloc(
     charUseCase: CharUseCase(
       charRepository: CharRepositoryImpl(),
@@ -261,10 +265,12 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
                           physics: NeverScrollableScrollPhysics(),
                           itemCount: state.result.episode?.length ?? 0,
                           itemBuilder: (context, index) {
+                            final url = imagesLocation.getNextImageUrl();
                             return Column(
                               children: [
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Container(
                                       height: 74.h,
@@ -273,29 +279,73 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
                                         borderRadius:
                                             BorderRadius.circular(14.r),
                                         image: DecorationImage(
-                                          image: NetworkImage(
-                                              state.result.image ?? ''),
+                                          image: NetworkImage(url),
+                                          fit: BoxFit.cover,
                                         ),
                                       ),
                                     ),
                                     const SizedBox(width: 20),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(state.episodeResult?[index]
-                                                .episode ??
-                                            ''),
-                                        Text(state.episodeResult?[index].name ??
-                                            ''),
-                                        Text(
-                                          dateConverter(state
-                                                  .episodeResult?[index]
-                                                  .created
-                                                  ?.millisecondsSinceEpoch ??
-                                              0),
+                                    Expanded(
+                                      child: Container(
+                                        alignment: Alignment.centerLeft,
+                                        height: 62.h,
+                                        width: 213.w,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                state.episodeResult?[index]
+                                                        .episode ??
+                                                    '',
+                                                style:
+                                                    TextHelper.mainCharStatus,
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                state.episodeResult?[index]
+                                                        .name ??
+                                                    '',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(height: 5.h),
+                                            Expanded(
+                                              child: Text(
+                                                dateConverter(state
+                                                        .episodeResult?[index]
+                                                        .created
+                                                        ?.millisecondsSinceEpoch ??
+                                                    0),
+                                                style: TextHelper.charSexText,
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ],
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    SizedBox(
+                                      height: 24.h,
+                                      width: 24.w,
+                                      child: IconButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  EpisodesInfoScreen(id: widget.id,),
+                                            ),
+                                          );
+                                        },
+                                        icon:
+                                            Icon(Icons.arrow_forward_ios_sharp),
+                                      ),
                                     ),
                                   ],
                                 ),

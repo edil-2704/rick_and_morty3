@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rick_and_morty/features/location/data/models/location_image_model.dart';
+import 'package:rick_and_morty/features/location/data/models/location_model.dart';
 import 'package:rick_and_morty/features/location/presentation/logic/bloc/location_bloc.dart';
 import 'package:rick_and_morty/features/location/presentation/screens/location_info_screen.dart';
 import 'package:rick_and_morty/internal/constants/text_helper/text_helper.dart';
@@ -44,9 +45,10 @@ class _CommonLocationCardState extends State<CommonLocationCard> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => LocationInfoScreen(
-                        id: widget.locationLoadedState.locationModel
-                                .results?[index].id ??
-                            0),
+                      id: widget.locationLoadedState.locationModel
+                              .results?[index].id ??
+                          0,
+                    ),
                   ),
                 );
               },

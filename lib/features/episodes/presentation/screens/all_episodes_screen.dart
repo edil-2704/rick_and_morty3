@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rick_and_morty/features/characters/presentation/widgets/search_widget.dart';
+import 'package:rick_and_morty/features/episodes/data/models/episode_image_model.dart';
 import 'package:rick_and_morty/features/episodes/data/repository/episode_repository.dart';
 import 'package:rick_and_morty/features/episodes/domain/episode_use_case/episode_use_case.dart';
 import 'package:rick_and_morty/features/episodes/presentation/logic/bloc/episodes_bloc.dart';
@@ -17,6 +18,7 @@ class AllEpisodesScreen extends StatefulWidget {
 }
 
 class _AllEpisodesScreenState extends State<AllEpisodesScreen> {
+  late final ImagesEpisodeModel episodeModel;
   final EpisodesBloc bloc = EpisodesBloc(
     episodeUseCase: EpisodeUseCase(
       episodeRepository: EpisodeRepositoryImpl(),
@@ -71,11 +73,22 @@ class _AllEpisodesScreenState extends State<AllEpisodesScreen> {
                             physics: NeverScrollableScrollPhysics(),
                             itemCount: state.episodeModel.results?.length ?? 0,
                             itemBuilder: (context, index) {
+                              final url = imagesLocation.getNextImageUrl();
                               return Center(
                                 child: InkWell(
                                   splashFactory: NoSplash.splashFactory,
-                                  onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => const EpisodesInfoScreen()));
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            EpisodesInfoScreen(
+                                          id: state.episodeModel.results?[index]
+                                                  .id ??
+                                              0,
+                                        ),
+                                      ),
+                                    );
                                   },
                                   child: Column(
                                     children: [
@@ -88,7 +101,10 @@ class _AllEpisodesScreenState extends State<AllEpisodesScreen> {
                                             height: 79,
                                             width: 79,
                                             decoration: BoxDecoration(
-                                              color: Colors.amber,
+                                              image: DecorationImage(
+                                                image: NetworkImage(url),
+                                                fit: BoxFit.cover,
+                                              ),
                                               borderRadius:
                                                   BorderRadius.circular(15),
                                             ),
@@ -98,17 +114,25 @@ class _AllEpisodesScreenState extends State<AllEpisodesScreen> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Text(state.episodeModel
-                                                      .results?[index].episode ??
+                                              Text(state
+                                                      .episodeModel
+                                                      .results?[index]
+                                                      .episode ??
                                                   ''),
                                               Text(
-                                                state.episodeModel.results?[index]
-                                                        .name ??
+                                                state.episodeModel
+                                                        .results?[index].name ??
                                                     '',
-                                                style: TextStyle(color: Theme.of(context).colorScheme.tertiary,),
+                                                style: TextStyle(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .tertiary,
+                                                ),
                                               ),
-                                              Text(state.episodeModel
-                                                      .results?[index].airDate ??
+                                              Text(state
+                                                      .episodeModel
+                                                      .results?[index]
+                                                      .airDate ??
                                                   ''),
                                             ],
                                           ),
