@@ -15,7 +15,7 @@ ThemeData darkMode = ThemeData(
     selectedIconTheme: IconThemeData(color: AppColors.mainGreen),
     selectedItemColor: AppColors.mainGreen,
   ),
-  dialogBackgroundColor:  Colors.grey.shade300,
+  dialogBackgroundColor:  AppColors.bottomNavDark,
   dialogTheme:const DialogTheme(backgroundColor: Colors.white),
   scaffoldBackgroundColor: AppColors.mainBlack,
   iconTheme: const IconThemeData(color: AppColors.mainGreen),

@@ -35,7 +35,7 @@ class LocationRepositoryImpl implements LocationRepository {
       log('getLocationsById = ${response.statusCode}');
       log('getLocationsById = ${response.data}');
 
-      log(response.data);
+
       if (response.statusCode == 200) {
         return LocationResult.fromJson(response.data);
       }

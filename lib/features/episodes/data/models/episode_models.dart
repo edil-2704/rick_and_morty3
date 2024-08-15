@@ -92,6 +92,6 @@ class EpisodeResult {
         "episode": episode,
         "characters": characters == null ? [] : List<dynamic>.from(characters!.map((x) => x)),
         "url": url,
-        "created": created?.toIso8601String(),
+        "created": created?.toString(),
     };
 }

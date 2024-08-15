@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rick_and_morty/features/characters/data/models/characters_models.dart';
 import 'package:rick_and_morty/features/characters/data/repository/char_repository_impl.dart';
 import 'package:rick_and_morty/features/characters/domain/char_use_case/char_use_case.dart';
@@ -10,6 +11,7 @@ import 'package:rick_and_morty/features/characters/presentation/widgets/common_c
 import 'package:rick_and_morty/features/characters/presentation/widgets/enum_funcs.dart';
 import 'package:rick_and_morty/features/episodes/data/repository/episode_repository.dart';
 import 'package:rick_and_morty/features/episodes/domain/episode_use_case/episode_use_case.dart';
+import 'package:rick_and_morty/internal/components/date_formatter.dart';
 import 'package:rick_and_morty/internal/constants/text_helper/text_helper.dart';
 import 'package:rick_and_morty/internal/constants/theme_helper/app_colors.dart';
 
@@ -42,12 +44,17 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
   }
 
   @override
+  void dispose() {
+    characterBloc.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
-        physics: const NeverScrollableScrollPhysics(),
         child: Column(
           children: [
             BlocConsumer<CharacterBloc, CharacterState>(
@@ -76,11 +83,11 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
 
                 if (state is CharacterLoadedInfoState) {
                   return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    padding: EdgeInsets.symmetric(horizontal: 16.h),
                     child: Column(
                       children: [
                         SizedBox(
-                          height: 218,
+                          height: 218.h,
                           child: Stack(
                             clipBehavior: Clip.none,
                             alignment: Alignment.topLeft,
@@ -105,9 +112,9 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 61,
-                                  left: 16,
+                                padding: EdgeInsets.only(
+                                  top: 61.h,
+                                  left: 16.w,
                                 ),
                                 child: IconButton(
                                   onPressed: () {
@@ -120,12 +127,11 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
                                 ),
                               ),
                               Positioned(
-                                top: 138,
-                                left:
-                                    MediaQuery.of(context).size.width / 2 - 73,
+                                top: 138.h,
+                                left: 100.w,
                                 child: Container(
-                                  width: 146,
-                                  height: 146,
+                                  width: 146.w,
+                                  height: 146.h,
                                   decoration: BoxDecoration(
                                     color: const Color(0xff7c94b6),
                                     image: DecorationImage(
@@ -134,8 +140,8 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
                                       ),
                                       fit: BoxFit.cover,
                                     ),
-                                    borderRadius: const BorderRadius.all(
-                                      Radius.circular(73),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(73.r),
                                     ),
                                     border: Border.all(
                                       color: Colors.white,
@@ -147,10 +153,13 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
                             ],
                           ),
                         ),
-                        const SizedBox(height: 60),
+                        SizedBox(height: 70.h),
                         Text(
                           state.result.name ?? '',
-                          style: TextHelper.mainCharInfo,
+                          style: TextStyle(
+                            fontSize: 34,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
                         const SizedBox(height: 5),
                         Text(
@@ -249,15 +258,47 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
                         ),
                         ListView.separated(
                           shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
                           itemCount: state.result.episode?.length ?? 0,
                           itemBuilder: (context, index) {
-                            return const Column(
+                            return Column(
                               children: [
                                 Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(''),
+                                    Container(
+                                      height: 74.h,
+                                      width: 74.w,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(14.r),
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                              state.result.image ?? ''),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 20),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(state.episodeResult?[index]
+                                                .episode ??
+                                            ''),
+                                        Text(state.episodeResult?[index].name ??
+                                            ''),
+                                        Text(
+                                          dateConverter(state
+                                                  .episodeResult?[index]
+                                                  .created
+                                                  ?.millisecondsSinceEpoch ??
+                                              0),
+                                        ),
+                                      ],
+                                    ),
                                   ],
-                                )
+                                ),
                               ],
                             );
                           },

@@ -36,7 +36,7 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
             await charUseCase.getCharactersById(id: event.id);
         List<EpisodeResult> episodes = [];
 
-        for (int i = 0; i <= result.episode!.length; i++) {
+        for (int i = 0; i <= result.episode!.length -1; i++) {
           List test = result.episode![i].split('/');
 
           String test2 = test.last;

@@ -74,7 +74,7 @@ class ToGridViewSeparated extends StatelessWidget {
                   Expanded(
                     child: Text(
                       state.characterModel.results?[index].name ?? '',
-                      style: TextHelper.mainChar,
+
                     ),
                   ),
                   Expanded(

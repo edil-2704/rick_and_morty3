@@ -13,6 +13,11 @@
 // class _Screen1State extends State<Screen1> {
 //   @override
 //   Widget build(BuildContext context) {
+// SystemChrome.setSystemUIOverlayStyle(
+// const SystemUiOverlayStyle(
+// statusBarColor: Colors.transparent,
+// ),
+// );
 //     return Scaffold(
 //       appBar: AppBar(
 //         backgroundColor: Colors.blue,

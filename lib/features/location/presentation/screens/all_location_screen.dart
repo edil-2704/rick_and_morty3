@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rick_and_morty/features/characters/presentation/widgets/search_widget.dart';
+import 'package:rick_and_morty/features/location/data/models/location_image_model.dart';
 import 'package:rick_and_morty/features/location/data/repository/location_repository_impl.dart';
 import 'package:rick_and_morty/features/location/domain/location_use_case/location_use_case.dart';
 import 'package:rick_and_morty/features/location/presentation/logic/bloc/location_bloc.dart';
@@ -32,7 +33,6 @@ class _AllLocationScreenState extends State<AllLocationScreen> {
       backgroundColor: Theme.of(context).colorScheme.surface,
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
-
         child: SafeArea(
             child: Padding(
           padding: const EdgeInsets.all(16),
@@ -61,6 +61,7 @@ class _AllLocationScreenState extends State<AllLocationScreen> {
                     if (state is LocationLoadedState) {
                       return CommonLocationCard(
                         locationLoadedState: state,
+                        imagesLocationModel: imagesLocation,
                       );
                     }
 

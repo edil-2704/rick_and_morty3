@@ -12,17 +12,14 @@ abstract class TextHelper {
   );
 
   static TextStyle mainChar = const TextStyle(
-    color: AppColors.mainBlack,
     fontSize: 16,
     fontWeight: FontWeight.bold,
   );
   static TextStyle mainCharInfo = const TextStyle(
-    color: AppColors.mainBlack,
     fontSize: 34,
     fontWeight: FontWeight.w400,
   );
   static TextStyle mainBold20 = const TextStyle(
-    color: AppColors.mainBlack,
     fontSize: 34,
     fontWeight: FontWeight.bold,
   );
@@ -42,7 +39,6 @@ abstract class TextHelper {
     fontWeight: FontWeight.normal,
   );
   static TextStyle charGenderText = const TextStyle(
-    color: AppColors.mainBlack,
     fontSize: 14,
     fontWeight: FontWeight.normal,
   );

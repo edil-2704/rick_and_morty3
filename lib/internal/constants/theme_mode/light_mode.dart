@@ -14,7 +14,7 @@ ThemeData lightMode = ThemeData(
     selectedIconTheme: IconThemeData(color: AppColors.mainGreen),
     selectedItemColor: AppColors.mainGreen,
   ),
-  dialogBackgroundColor: Colors.grey.shade300,
+  dialogBackgroundColor: Colors.white,
   scaffoldBackgroundColor: AppColors.mainBlack,
   iconTheme: const IconThemeData(color: AppColors.mainBlack),
   dialogTheme: const DialogTheme(backgroundColor: AppColors.mainBlack),
