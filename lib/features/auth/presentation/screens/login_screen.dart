@@ -2,10 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rick_and_morty/features/auth/presentation/logic/bloc/auth_bloc.dart';
 import 'package:rick_and_morty/features/auth/presentation/screens/registration_screen.dart';
 import 'package:rick_and_morty/features/auth/presentation/widgets/common_elevated_button.dart';
 import 'package:rick_and_morty/generated/l10n.dart';
+import 'package:rick_and_morty/internal/components/bottom_navbar.dart';
 import 'package:rick_and_morty/internal/components/common_text_field.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -16,6 +18,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool isHiddenPassword = true;
   TextEditingController loginController = TextEditingController();
 
   TextEditingController passwordController = TextEditingController();
@@ -29,20 +32,16 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  // @override
-  // void initState() {
-  //   authBloc.add(
-  //     LoginEvent(
-  //       name: loginController.text,
-  //       passwordToLogin: passwordController.text,
-  //     ),
-  //   );
-  //   super.initState();
-  // }
+  void togglePasswordView() {
+    setState(() {
+      isHiddenPassword = !isHiddenPassword;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -54,8 +53,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 Center(
                   child: Image.asset(
                     'assets/images/main.png',
-                    height: 377,
-                    width: 268,
+                    height: 377.h,
+                    width: 268.w,
                   ),
                 ),
                 Text(S.of(context).login),
@@ -68,11 +67,37 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 10),
                 Text(S.of(context).password),
                 const SizedBox(height: 10),
-                TextFieldWidget(
+                TextFormField(
+                  autocorrect: false,
                   controller: passwordController,
-                  hintText: 'Password',
-                  suffixIcon: const Icon(Icons.visibility_off_sharp),
-                  prefixIcon: const Icon(Icons.person),
+                  obscureText: isHiddenPassword,
+                  validator: (value) => value != null && value.length < 6
+                      ? 'Минимум 6 символов'
+                      : null,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: const Color(0xffF2F2F2),
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 10.w,
+                      vertical: 15.h,
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                    hintText: 'Введите пароль',
+                    prefixIcon: const Icon(Icons.password),
+                    suffix: InkWell(
+                      onTap: togglePasswordView,
+                      child: Icon(
+                        isHiddenPassword
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 40),
                 BlocListener<AuthBloc, AuthState>(
@@ -80,9 +105,34 @@ class _LoginScreenState extends State<LoginScreen> {
                   listener: (context, state) {
                     print(state);
 
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          backgroundColor: Colors.white,
+                          title: Text("Ошибка"),
+                          content: Text("Введены неверные логин или пароль"),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(); // Закрыть диалог
+                              },
+                              child: Text("Ок"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+
                     if (state is AuthLoadedState) {
                       ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('daaaaa')));
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BottomNavBarScreen(),
+                        ),
+                      );
                     }
                   },
                   child: ElevatedButtonWidget(
@@ -93,18 +143,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           passwordToLogin: passwordController.text,
                         ),
                       );
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => RegistrationScreen()));
                     },
-                    title: S.of(context).create,
+                    title: S.of(context).login,
                   ),
                 ),
                 const SizedBox(height: 20),
                 Container(
                   alignment: Alignment.bottomCenter,
-                  height: 20,
+                  height: 20.h,
                   width: MediaQuery.of(context).size.width,
                   child: RichText(
                     text: TextSpan(

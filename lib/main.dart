@@ -5,6 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:rick_and_morty/features/auth/presentation/screens/login_screen.dart';
+import 'package:rick_and_morty/features/auth/presentation/screens/splash_screen_2.dart';
 import 'package:rick_and_morty/firebase_options.dart';
 import 'package:rick_and_morty/generated/l10n.dart';
 import 'package:rick_and_morty/internal/components/bottom_navbar.dart';
@@ -70,7 +71,7 @@ class _MyAppState extends State<MyApp> {
                 debugShowCheckedModeBanner: false,
                 title: 'Flutter Demo',
                 theme: Provider.of<ThemeProvider>(context).themeData,
-                home: const BottomNavBarScreen(),
+                home: const SplashScreen2(),
               );
             },
           );

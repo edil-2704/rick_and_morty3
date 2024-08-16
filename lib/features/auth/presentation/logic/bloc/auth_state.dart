@@ -10,9 +10,11 @@ final class AuthLoadedState extends AuthState {
 
   AuthLoadedState({required this.userCredential});
 }
+
+
 final class AuthErrorState extends AuthState {
   final FirebaseException error;
- 
+
 
   AuthErrorState({required this.error});
 }

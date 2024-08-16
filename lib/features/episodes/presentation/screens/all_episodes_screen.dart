@@ -2,13 +2,17 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rick_and_morty/features/characters/presentation/screens/character_info_screen.dart';
 import 'package:rick_and_morty/features/characters/presentation/widgets/search_widget.dart';
 import 'package:rick_and_morty/features/episodes/data/models/episode_image_model.dart';
 import 'package:rick_and_morty/features/episodes/data/repository/episode_repository.dart';
 import 'package:rick_and_morty/features/episodes/domain/episode_use_case/episode_use_case.dart';
 import 'package:rick_and_morty/features/episodes/presentation/logic/bloc/episodes_bloc.dart';
 import 'package:rick_and_morty/features/episodes/presentation/screens/episodes_info_screen.dart';
+import 'package:rick_and_morty/internal/components/date_formatter.dart';
 import 'package:rick_and_morty/internal/constants/text_helper/text_helper.dart';
+import 'package:rick_and_morty/internal/constants/theme_helper/app_colors.dart';
 
 class AllEpisodesScreen extends StatefulWidget {
   const AllEpisodesScreen({super.key});
@@ -110,31 +114,52 @@ class _AllEpisodesScreenState extends State<AllEpisodesScreen> {
                                             ),
                                           ),
                                           const SizedBox(width: 20),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(state
-                                                      .episodeModel
-                                                      .results?[index]
-                                                      .episode ??
-                                                  ''),
-                                              Text(
-                                                state.episodeModel
-                                                        .results?[index].name ??
-                                                    '',
-                                                style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .tertiary,
-                                                ),
+                                          Expanded(
+                                            child: SizedBox(
+                                              width: 104.w,
+                                              height: 60.h,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    state
+                                                            .episodeModel
+                                                            .results?[index]
+                                                            .episode ??
+                                                        '',
+                                                    style: TextStyle(
+                                                      color: AppColors.mainBlue,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    state
+                                                            .episodeModel
+                                                            .results?[index]
+                                                            .name ??
+                                                        '',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  Text(
+                                                    dateConverter(state
+                                                            .episodeModel
+                                                            .results?[index]
+                                                            .created
+                                                            ?.millisecondsSinceEpoch ??
+                                                        0),
+                                                    style:
+                                                        TextHelper.charSexText,
+                                                  ),
+                                                ],
                                               ),
-                                              Text(state
-                                                      .episodeModel
-                                                      .results?[index]
-                                                      .airDate ??
-                                                  ''),
-                                            ],
+                                            ),
                                           ),
                                         ],
                                       ),

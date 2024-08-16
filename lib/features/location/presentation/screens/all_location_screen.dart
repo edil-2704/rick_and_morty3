@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rick_and_morty/features/characters/presentation/widgets/search_widget.dart';
 import 'package:rick_and_morty/features/location/data/models/location_image_model.dart';
 import 'package:rick_and_morty/features/location/data/repository/location_repository_impl.dart';
@@ -40,8 +41,26 @@ class _AllLocationScreenState extends State<AllLocationScreen> {
             child: Column(
               children: [
                 SearchWidget(
-                    searchTextController: searchTextController,
-                    hintText: 'Поиск Локаций'),
+                  searchTextController: searchTextController,
+                  hintText: 'Поиск Локаций',
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        backgroundColor: Theme.of(context).colorScheme.surface,
+                        content: SizedBox(
+                          height: 761.h,
+                          width: 375.w,
+                          child: Column(
+                            children: [
+                              Text('Status'),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
                 const SizedBox(height: 20),
                 BlocConsumer<LocationBloc, LocationState>(
                   bloc: locationBloc,

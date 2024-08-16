@@ -25,6 +25,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
         log('result ===${result.user?.uid}');
 
+
         emit(AuthLoadedState(userCredential: result));
         log('AuthLoadedState emitted with user: ${result.user?.email}');
 
@@ -49,6 +50,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           email: event.email,
           password: event.password,
         );
+
+
 
         log('result ===${result.user?.email}');
 

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class TextFieldWidget extends StatelessWidget {
+class TextFieldWidget extends StatefulWidget {
   final TextEditingController controller;
   final String hintText;
   final TextInputType? textInputType;
+
   final Widget? prefixIcon;
   final Widget? suffixIcon;
-  final bool? isObsecured;
+  final bool? isHiddenPassword;
 
   const TextFieldWidget({
     super.key,
@@ -14,22 +16,27 @@ class TextFieldWidget extends StatelessWidget {
     required this.hintText,
     this.prefixIcon,
     this.suffixIcon,
-    this.isObsecured,
+    this.isHiddenPassword,
     this.textInputType,
   });
 
   @override
+  State<TextFieldWidget> createState() => _TextFieldWidgetState();
+}
+
+class _TextFieldWidgetState extends State<TextFieldWidget> {
+  @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: controller,
-      keyboardType: textInputType,
+      controller: widget.controller,
+      keyboardType: widget.textInputType,
       autocorrect: false,
       decoration: InputDecoration(
-          fillColor: Colors.grey.shade300,
-          hintText: hintText,
-          prefixIcon: prefixIcon,
+          fillColor:  const Color(0xffF2F2F2),
+          hintText: widget.hintText,
+          prefixIcon: widget.prefixIcon,
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(12.r),
             borderSide: BorderSide.none,
           ),
           filled: true),

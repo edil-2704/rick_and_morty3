@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ElevatedButtonWidget extends StatelessWidget {
   final VoidCallback onPressed;
@@ -20,7 +21,7 @@ class ElevatedButtonWidget extends StatelessWidget {
         ),
         backgroundColor: const Color(0xff22A2BD),
         foregroundColor: Colors.white,
-        minimumSize: Size(MediaQuery.of(context).size.width, 48),
+        minimumSize: Size(MediaQuery.of(context).size.width, 48.h),
       ),
       child: Text(title),
     );

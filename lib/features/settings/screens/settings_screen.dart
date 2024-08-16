@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rick_and_morty/features/settings/screens/profile_editing_screen.dart';
 import 'package:rick_and_morty/internal/constants/text_helper/text_helper.dart';
 import 'package:rick_and_morty/internal/constants/theme_helper/app_colors.dart';
 import 'package:rick_and_morty/internal/constants/theme_mode/theme_provider.dart';
@@ -63,7 +64,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
             SizedBox(height: 30),
             Center(
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileEditingScreen()));
+                },
                 child: Text('Редактировать'),
                 style: ElevatedButton.styleFrom(
                   splashFactory: NoSplash.splashFactory,

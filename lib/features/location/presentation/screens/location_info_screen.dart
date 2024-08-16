@@ -25,7 +25,6 @@ class _LocationInfoScreenState extends State<LocationInfoScreen> {
   final LocationBloc locationBloc = LocationBloc(
       locationUseCase:
           LocationUseCase(locationRepositories: LocationRepositoryImpl()));
-  
 
   @override
   void initState() {
@@ -121,6 +120,19 @@ class _LocationInfoScreenState extends State<LocationInfoScreen> {
                           ),
                         ),
                         const SizedBox(height: 16),
+                        ListView.separated(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: state.locationResult.residents?.length ?? 0,
+                          itemBuilder: (context, index) {
+                            return Column(children: [
+
+                            ],);
+                          },
+                          separatorBuilder: (context, index) {
+                            return SizedBox(height: 20.h);
+                          },
+                        ),
                       ],
                     );
                   }
@@ -136,34 +148,111 @@ class _LocationInfoScreenState extends State<LocationInfoScreen> {
   }
 }
 
-class CharacterTile extends StatelessWidget {
-  final String name;
-  final String subtitle;
-
-  const CharacterTile({
-    super.key,
-    required this.name,
-    required this.subtitle,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      contentPadding: const EdgeInsets.all(0),
-      leading: CircleAvatar(
-        backgroundColor: Colors.amberAccent,
-        radius: 34.r,
-      ),
-      title: Text(
-        name,
-        style: const TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      subtitle: Text(subtitle),
-      trailing: const Icon(Icons.arrow_forward_ios),
-      onTap: () {},
-    );
-  }
-}
+//
+//
+// class CommonCharLocListView extends StatelessWidget {
+//   final LocationInfoLoadedState state;
+//
+//   const CommonCharLocListView({
+//     super.key,
+//     required this.widget,
+//     required this.state,
+//   });
+//
+//   final LocationInfoScreen widget;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return ListView.separated(
+//       shrinkWrap: true,
+//       physics: const NeverScrollableScrollPhysics(),
+//       itemCount: state.characterResult?.length ?? 0,
+//       itemBuilder: (context, index) {
+//         return Column(
+//           children: [
+//             Row(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               children: [
+//                 Container(
+//                   height: 74.h,
+//                   width: 74.w,
+//                   decoration: BoxDecoration(
+//                     borderRadius: BorderRadius.circular(14.r),
+//                     image: DecorationImage(
+//                       image: NetworkImage(
+//                           state.characterResult?[index].image ?? ''),
+//                       fit: BoxFit.cover,
+//                     ),
+//                   ),
+//                 ),
+//                 const SizedBox(width: 20),
+//                 Expanded(
+//                   child: Container(
+//                     alignment: Alignment.centerLeft,
+//                     height: 62.h,
+//                     width: 213.w,
+//                     child: Column(
+//                       crossAxisAlignment: CrossAxisAlignment.start,
+//                       children: [
+//                         Expanded(
+//                           child: Text(
+//                             statusConverter(
+//                                 state.characterResult?[index].status ??
+//                                     Status.ALIVE) ??
+//                                 '',
+//                             style: TextStyle(
+//                                 color: state.characterResult?[index].status ==
+//                                     Status.ALIVE
+//                                     ? AppColors.mainGreen
+//                                     : AppColors.mainRed),
+//                           ),
+//                         ),
+//                         Expanded(
+//                           child: Text(
+//                             state.characterResult?[index].name ?? '',
+//                             style: TextStyle(
+//                               fontWeight: FontWeight.bold,
+//                               fontSize: 15,
+//                             ),
+//                           ),
+//                         ),
+//                         SizedBox(height: 5.h),
+//                         Expanded(
+//                             child: Text(
+//                               '${speciesConverter(state.characterResult?[index].species ?? Species.HUMAN) ?? ''}, ${genderConverter(state.characterResult?[index].gender ?? Gender.UNKNOWN) ?? ''}',
+//                               style: TextHelper.mainCharGender,
+//                             )),
+//                       ],
+//                     ),
+//                   ),
+//                 ),
+//                 Spacer(),
+//                 SizedBox(
+//                   height: 24.h,
+//                   width: 24.w,
+//                   child: IconButton(
+//                     onPressed: () {
+//                       Navigator.push(
+//                         context,
+//                         MaterialPageRoute(
+//                           builder: (context) => EpisodesInfoScreen(
+//                             id: widget.id,
+//                           ),
+//                         ),
+//                       );
+//                     },
+//                     icon: Icon(Icons.arrow_forward_ios_sharp),
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ],
+//         );
+//       },
+//       separatorBuilder: (context, index) {
+//         return const SizedBox(height: 20);
+//       },
+//     );
+//   }
+// }

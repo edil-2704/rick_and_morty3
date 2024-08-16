@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 class SearchWidget extends StatelessWidget {
   final TextEditingController searchTextController;
   final String hintText;
+  final VoidCallback? onPressed;
+
   const SearchWidget({
     super.key,
-    required this.searchTextController, required this.hintText,
+    required this.searchTextController,
+    required this.hintText,
+    this.onPressed,
   });
 
   @override
@@ -15,8 +19,11 @@ class SearchWidget extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hintText,
         fillColor: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
-        suffixIcon: const Icon(Icons.filter_alt_outlined),
-        prefixIcon: const Icon(Icons.search_rounded),
+        suffixIcon: IconButton(
+          onPressed: onPressed,
+          icon: Icon(Icons.filter_alt_outlined),
+        ),
+        prefixIcon: Icon(Icons.search_rounded),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(100),
           borderSide: BorderSide.none,

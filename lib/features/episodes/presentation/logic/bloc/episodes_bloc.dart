@@ -36,26 +36,26 @@ class EpisodesBloc extends Bloc<EpisodesEvent, EpisodesState> {
 
         List<CharacterResult> episodes = [];
 
-        for (int i = 0; i <= result.episode!.length -1; i++) {
-          List test = result.episode![i].split('/');
+        for (int i = 0; i <= result.characters!.length -1; i++) {
+          List test = result.characters![i].split('/');
 
           String test2 = test.last;
           log('test2 value: $test2');
           log('Processing ID: $test2');
-          if (RegExp(r'^\d+$').hasMatch(test2)) {
-            try {
-              final int characterId = int.parse(test2);
-              final CharacterResult characterResult =
-              await charUseCase!.getCharactersById(id: characterId);
-              episodes.add(characterResult);
-            } catch (e) {
-              log('Failed to parse character ID: $test2, error: $e');
-              continue; // Пропуск итерации, если произошла ошибка
-            }
-          } else {
-            log('Invalid ID format: $test2');
-            continue; // Пропуск итерации, если формат ID неверен
-          }
+          // if (RegExp(r'^\d+$').hasMatch(test2)) {
+          //   try {
+          //     final int characterId = int.parse(test2);
+          //     final CharacterResult characterResult =
+          //     await charUseCase!.getCharactersById(id: characterId);
+          //     episodes.add(characterResult);
+          //   } catch (e) {
+          //     log('Failed to parse character ID: $test2, error: $e');
+          //     continue; // Пропуск итерации, если произошла ошибка
+          //   }
+          // } else {
+          //   log('Invalid ID format: $test2');
+          //   continue; // Пропуск итерации, если формат ID неверен
+          // }
 
           final CharacterResult characterResult =
           await charUseCase!.getCharactersById(
