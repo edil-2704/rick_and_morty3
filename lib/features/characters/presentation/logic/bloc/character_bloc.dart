@@ -19,9 +19,13 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
     this.episodeUseCase,
   }) : super(CharacterInitialState()) {
     on<GetAllCharactersEvent>((event, emit) async {
-      emit(CharacterLoadingState());
+      if (event.isFirstCall) {
+        emit(CharacterLoadingState());
+      }
+
       try {
-        final CharacterModel result = await charUseCase.getAllCharacters();
+        final CharacterModel result =
+            await charUseCase.getAllCharacters(event.page);
         emit(CharacterLoadedState(characterModel: result));
       } catch (e) {
         emit(CharacterErrorState(error: CatchException.convertException(e)));
@@ -36,7 +40,7 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
             await charUseCase.getCharactersById(id: event.id);
         List<EpisodeResult> episodes = [];
 
-        for (int i = 0; i <= result.episode!.length -1; i++) {
+        for (int i = 0; i <= result.episode!.length - 1; i++) {
           List test = result.episode![i].split('/');
 
           String test2 = test.last;

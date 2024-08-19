@@ -65,7 +65,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileEditingScreen()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ProfileEditingScreen()));
                 },
                 child: Text('Редактировать'),
                 style: ElevatedButton.styleFrom(
@@ -99,7 +102,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 IconButton(
                   onPressed: () {
                     showDialog(
-
                       context: context,
                       builder: (context) {
                         int selectedValue = themeProvider.isDarkMode ? 2 : 1;
@@ -107,7 +109,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         return StatefulBuilder(
                           builder: (context, setState) {
                             return AlertDialog(
-                              backgroundColor: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
+                              backgroundColor: Theme.of(context)
+                                  .bottomNavigationBarTheme
+                                  .backgroundColor,
                               surfaceTintColor: Colors.blue,
                               title: Text('Темная тема'),
                               content: Column(
@@ -182,17 +186,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       ),
                                     ],
                                   ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context); // Close the dialog
+                                    },
+                                    child: Text('ОТМЕНА'),
+                                  ),
                                 ],
                               ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context)
-                                        .pop(); // Close the dialog
-                                  },
-                                  child: Text('ОТМЕНА'),
-                                ),
-                              ],
+
                             );
                           },
                         );

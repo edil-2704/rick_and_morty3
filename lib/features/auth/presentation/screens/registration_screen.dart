@@ -147,7 +147,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => BottomNavBarScreen(),
+                        builder: (context) => BottomNavBar(),
                       ),
                     );
                   }

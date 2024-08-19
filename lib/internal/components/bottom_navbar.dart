@@ -5,14 +5,14 @@ import 'package:rick_and_morty/features/location/presentation/screens/all_locati
 import 'package:rick_and_morty/features/settings/screens/settings_screen.dart';
 import 'package:rick_and_morty/internal/constants/theme_helper/app_colors.dart';
 
-class BottomNavBarScreen extends StatefulWidget {
-  const BottomNavBarScreen({super.key});
+class BottomNavBar extends StatefulWidget {
+  const BottomNavBar({super.key});
 
   @override
-  State<BottomNavBarScreen> createState() => _BottomNavBarState();
+  State<BottomNavBar> createState() => _BottomNavBarState();
 }
 
-class _BottomNavBarState extends State<BottomNavBarScreen> {
+class _BottomNavBarState extends State<BottomNavBar> {
   int selectedIndex = 0;
   void onItemTab(int index) {
     setState(() {

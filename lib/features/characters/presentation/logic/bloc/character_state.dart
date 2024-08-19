@@ -29,10 +29,3 @@ final class CharacterLoadedInfoState extends CharacterState {
   });
 }
 
-final class CharacterLoadedEpisodeState extends CharacterState {
-  final List<EpisodeResult> episodeResult;
-
-  CharacterLoadedEpisodeState({
-    required this.episodeResult,
-  });
-}

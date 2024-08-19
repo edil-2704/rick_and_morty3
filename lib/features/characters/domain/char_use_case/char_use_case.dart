@@ -11,8 +11,8 @@ class CharUseCase {
   CharUseCase({required this.charRepository});
   
 
-  Future<CharacterModel> getAllCharacters() async {
-    return await charRepository.getAllCharacters();
+  Future<CharacterModel> getAllCharacters(int page) async {
+    return await charRepository.getAllCharacters(page);
   }
 
   Future<CharacterResult> getCharactersById({required int id}) async {

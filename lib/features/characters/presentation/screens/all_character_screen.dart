@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rick_and_morty/features/characters/data/models/characters_models.dart';
 import 'package:rick_and_morty/features/characters/data/repository/char_repository_impl.dart';
 import 'package:rick_and_morty/features/characters/domain/char_use_case/char_use_case.dart';
 import 'package:rick_and_morty/features/characters/presentation/logic/bloc/character_bloc.dart';
@@ -30,38 +32,78 @@ class _AllCharacterScreenState extends State<AllCharacterScreen> {
   );
 
   bool isListView = true;
+  late final ScrollController scrollController;
+  List<CharacterResult> charactersList = [];
+  bool isLoading = false;
+  int page = 1;
 
   @override
   void initState() {
-    characterBloc.add(GetAllCharactersEvent());
+    characterBloc.add(GetAllCharactersEvent(
+      page: page,
+      isFirstCall: true,
+    ));
+    scrollController = ScrollController(initialScrollOffset: 5.0)
+      ..addListener(_scrollListener);
     super.initState();
+  }
+
+  _scrollListener() {
+    if (charactersList.isNotEmpty) {
+      if (scrollController.offset >=
+              scrollController.position.maxScrollExtent &&
+          !scrollController.position.outOfRange) {
+        isLoading = true;
+
+        if (isLoading) {
+          page = page + 1;
+
+          characterBloc.add(GetAllCharactersEvent(page: page));
+        }
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: SafeArea(
-          child: Column(
-            children: [
-              SearchWidget(
-                searchTextController: searchTextController,
-                hintText: 'Найти персонажа',
-              ),
-              const SizedBox(height: 40),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 6,
-                    child: Text(
-                      'Всего песонажей: 200',
-                      style: TextHelper.totalChar,
+      body: RefreshIndicator(
+        onRefresh: () async {
+          charactersList.clear();
+          characterBloc.add(GetAllCharactersEvent(
+            page: page,
+            isFirstCall: true,
+          ));
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: SafeArea(
+            child: Column(
+              children: [
+                SearchWidget(
+                  searchTextController: searchTextController,
+                  hintText: 'Найти персонажа',
+                ),
+                SizedBox(height: 20.h),
+                Row(
+                  children: [
+                    Expanded(
+                      child: BlocBuilder<CharacterBloc, CharacterState>(
+                        bloc: characterBloc,
+                        builder: (context, state) {
+                          if (state is CharacterLoadedState) {
+                            return Text(
+                              'Всего песонажей: ${state.characterModel.info?.count}',
+                              style: TextHelper.totalChar,
+                            );
+                          }
+
+                          return SizedBox();
+                        },
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: IconButton(
+                    IconButton(
                       onPressed: () {
                         isListView = !isListView;
                         setState(() {});
@@ -72,12 +114,11 @@ class _AllCharacterScreenState extends State<AllCharacterScreen> {
                             : Icons.grid_view_outlined,
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Expanded(
-                child: BlocConsumer<CharacterBloc, CharacterState>(
+                  ],
+                ),
+                const SizedBox(height: 20),
+                Expanded(
+                  child: BlocConsumer<CharacterBloc, CharacterState>(
                     bloc: characterBloc,
                     listener: (context, state) {
                       if (state is CharacterErrorState) {
@@ -86,6 +127,12 @@ class _AllCharacterScreenState extends State<AllCharacterScreen> {
                             content: Text(state.error.message.toString()),
                           ),
                         );
+                      }
+
+                      if (state is CharacterLoadedState) {
+                        charactersList
+                            .addAll(state.characterModel.results ?? []);
+                        isLoading = false;
                       }
 
                       if (state is CharacterLoadingState) {
@@ -103,29 +150,32 @@ class _AllCharacterScreenState extends State<AllCharacterScreen> {
                       if (state is CharacterLoadedState) {
                         return isListView
                             ? ToListViewSeparated(
-                                state: state,
-                                onRefresh: () {
-                                  characterBloc.add(GetAllCharactersEvent());
-                                },
+                                charactersList: charactersList,
+                                scrollController: scrollController,
                               )
                             : ToGridViewSeparated(
-                                state: state,
-                                onRefresh: () {
-                                  characterBloc.add(GetAllCharactersEvent());
-                                },
+                                scrollController: scrollController,
+                                charactersList: charactersList,
                               );
                       }
                       if (state is CharacterErrorState) {
-                        return const Center(
-                          child: Text('Failed to load characters'),
+                        return Center(
+                          child: ElevatedButton(
+                              onPressed: () {
+                                characterBloc
+                                    .add(GetAllCharactersEvent(page: page));
+                              },
+                              child: Text('Нажмите чтобы обновить')),
                         );
                       }
                       return const Center(
                         child: Text('No characters found'),
                       );
-                    }),
-              ),
-            ],
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

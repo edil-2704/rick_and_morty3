@@ -71,7 +71,7 @@ class _MyAppState extends State<MyApp> {
                 debugShowCheckedModeBanner: false,
                 title: 'Flutter Demo',
                 theme: Provider.of<ThemeProvider>(context).themeData,
-                home: const SplashScreen2(),
+                home: const BottomNavBar(),
               );
             },
           );

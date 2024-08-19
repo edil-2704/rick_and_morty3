@@ -18,7 +18,5 @@ class LocationUseCase {
   Future<LocationResult> getLocationsById({required int id}) async {
     return await locationRepositories.getLocationsById(id: id);
   }
-  Future<List<CharacterResult>> getResident(LocationResult result) async {
-    return await locationRepositories.getResidents(result);
-  }
+  
 }

@@ -108,19 +108,23 @@ class _LoginScreenState extends State<LoginScreen> {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return AlertDialog(
-                          backgroundColor: Colors.white,
-                          title: Text("Ошибка"),
-                          content: Text("Введены неверные логин или пароль"),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop(); // Закрыть диалог
-                              },
-                              child: Text("Ок"),
-                            ),
-                          ],
-                        );
+                        if (state is AuthErrorState) {
+                          AlertDialog(
+                            backgroundColor: Colors.white,
+                            title: Text("Ошибка"),
+                            content: Text("Введены неверные логин или пароль"),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context); // Закрыть диалог
+                                },
+                                child: Text("Ок"),
+                              ),
+                            ],
+                          );
+                        }
+
+                        return SizedBox();
                       },
                     );
 
@@ -130,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => BottomNavBarScreen(),
+                          builder: (context) => BottomNavBar(),
                         ),
                       );
                     }

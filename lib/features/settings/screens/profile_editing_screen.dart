@@ -27,30 +27,41 @@ class _ProfileEditingScreenState extends State<ProfileEditingScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment:CrossAxisAlignment.start ,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
               child: CircleAvatar(
                 radius: 75.r,
-                backgroundImage: AssetImage('assets/images/ea.png'), // Path to the profile image
+                backgroundImage: AssetImage(
+                    'assets/images/ea.png'), // Path to the profile image
               ),
             ),
             Center(
               child: TextButton(
-                onPressed: () {
-
-                },
+                onPressed: () {},
                 child: Text(
                   'Изменить фото',
-                  style: TextStyle(color: AppColors.mainBlue, fontSize: 16,),
+                  style: TextStyle(
+                    color: AppColors.mainBlue,
+                    fontSize: 16,
+                  ),
                 ),
               ),
             ),
-            Text('профиль'.toUpperCase(), style: TextStyle(color: AppColors.mainGrey),),
+            Text(
+              'профиль'.toUpperCase(),
+              style: TextStyle(color: AppColors.mainGrey),
+            ),
             SizedBox(height: 30),
-            CommonCharDataWidget(tittle: 'tittle', subTittle: 'subTittle'),
+            CommonCharDataWidget(
+              tittle: 'Изменить ФИО',
+              subTittle: 'Oleg Belotserkovsky',
+            ),
             SizedBox(height: 30),
-            CommonCharDataWidget(tittle: 'tittle', subTittle: 'subTittle'),
+            CommonCharDataWidget(
+              tittle: 'Логин',
+              subTittle: 'Rick',
+            ),
             SizedBox(height: 30),
           ],
         ),
@@ -58,5 +69,3 @@ class _ProfileEditingScreenState extends State<ProfileEditingScreen> {
     );
   }
 }
-
-

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rick_and_morty/features/characters/presentation/widgets/common_progress_indicator.dart';
 import 'package:rick_and_morty/features/location/data/models/location_image_model.dart';
 import 'package:rick_and_morty/features/location/data/models/location_model.dart';
 import 'package:rick_and_morty/features/location/presentation/logic/bloc/location_bloc.dart';
@@ -6,13 +8,15 @@ import 'package:rick_and_morty/features/location/presentation/screens/location_i
 import 'package:rick_and_morty/internal/constants/text_helper/text_helper.dart';
 
 class CommonLocationCard extends StatefulWidget {
-  final LocationLoadedState locationLoadedState;
   final ImagesLocationModel imagesLocationModel;
+  final List<LocationResult> locationsList;
+  final ScrollController scrollController;
 
   const CommonLocationCard({
     super.key,
-    required this.locationLoadedState,
+    required this.locationsList,
     required this.imagesLocationModel,
+    required this.scrollController,
   });
 
   @override
@@ -20,23 +24,28 @@ class CommonLocationCard extends StatefulWidget {
 }
 
 class _CommonLocationCardState extends State<CommonLocationCard> {
+  final ScrollController scrollController2 = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Всего локаций: ${widget.locationLoadedState.locationModel.info?.count ?? 0}',
-          style: TextHelper.totalChar,
-        ),
         const SizedBox(height: 20),
         ListView.separated(
+
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemCount:
-              widget.locationLoadedState.locationModel.results?.length ?? 0,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: widget.locationsList.length ?? 0,
           itemBuilder: (context, index) {
             final url = imagesLocation.getNextImageUrl();
+
+            if (index >= widget.locationsList.length - 1) {
+              return Padding(
+                padding: EdgeInsets.symmetric(vertical: 5.h),
+                child: CommonProgressIndicator(),
+              );
+            }
 
             return InkWell(
               splashFactory: NoSplash.splashFactory,
@@ -45,9 +54,7 @@ class _CommonLocationCardState extends State<CommonLocationCard> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => LocationInfoScreen(
-                      id: widget.locationLoadedState.locationModel
-                              .results?[index].id ??
-                          0,
+                      id: widget.locationsList[index].id ?? 0,
                     ),
                   ),
                 );
@@ -57,6 +64,9 @@ class _CommonLocationCardState extends State<CommonLocationCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Card(
+                      color: Theme.of(context)
+                          .bottomNavigationBarTheme
+                          .backgroundColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                       ),
@@ -70,7 +80,7 @@ class _CommonLocationCardState extends State<CommonLocationCard> {
                               url,
                               fit: BoxFit.cover,
                               width: double.infinity,
-                              height: 218,
+                              height: 218.h,
                             ),
                           ),
                           Padding(
@@ -79,16 +89,14 @@ class _CommonLocationCardState extends State<CommonLocationCard> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  widget.locationLoadedState.locationModel
-                                          .results?[index].name ??
-                                      '',
+                                  widget.locationsList[index].name ?? '',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 const SizedBox(height: 8),
                                 Text(
-                                  '${widget.locationLoadedState.locationModel.results?[index].type ?? ''} , ${widget.locationLoadedState.locationModel.results?[index].dimension ?? ''}',
+                                  '${widget.locationsList[index].type ?? ''} , ${widget.locationsList[index].dimension ?? ''}',
                                   style: TextHelper.charSexText,
                                 ),
                               ],

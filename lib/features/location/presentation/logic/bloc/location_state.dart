@@ -5,7 +5,9 @@ sealed class LocationState {}
 
 final class LocationInitialState extends LocationState {}
 
-final class LocationLoadingState extends LocationState {}
+final class LocationLoadingState extends LocationState {
+
+}
 
 final class LocationLoadedState extends LocationState {
   final LocationModel locationModel;
@@ -21,12 +23,10 @@ final class LocationErrorState extends LocationState {
 
 final class LocationInfoLoadedState extends LocationState {
   final LocationResult locationResult;
-
-  LocationInfoLoadedState({required this.locationResult});
-}
-
-class ResidentLoadedState extends LocationState {
   final List<CharacterResult> residentsModel;
 
-  ResidentLoadedState({required this.residentsModel});
+  LocationInfoLoadedState({
+    required this.locationResult,
+    required this.residentsModel,
+  });
 }

@@ -9,15 +9,19 @@ import 'package:rick_and_morty/features/episodes/domain/episode_use_case/episode
 import 'package:rick_and_morty/internal/helpers/catch_exception/catch_exception.dart';
 
 part 'episodes_event.dart';
+
 part 'episodes_state.dart';
 
 class EpisodesBloc extends Bloc<EpisodesEvent, EpisodesState> {
   final EpisodeUseCase episodeUseCase;
   final CharUseCase? charUseCase;
 
-  EpisodesBloc({required this.episodeUseCase, this.charUseCase}) : super(EpisodesInitialState()) {
+  EpisodesBloc({required this.episodeUseCase, this.charUseCase})
+      : super(EpisodesInitialState()) {
     on<GetAllEpisodes>((event, emit) async {
-      emit(EpisodesLoadingState());
+      if (event.isFirstCall) {
+        emit(EpisodesLoadingState());
+      }
 
       try {
         final EpisodeModel result = await episodeUseCase.getAllEpisodes();
@@ -32,11 +36,11 @@ class EpisodesBloc extends Bloc<EpisodesEvent, EpisodesState> {
 
       try {
         final EpisodeResult result =
-        await episodeUseCase.getEpisodesById(id: event.id);
+            await episodeUseCase.getEpisodesById(id: event.id);
 
-        List<CharacterResult> episodes = [];
+        List<CharacterResult> characters = [];
 
-        for (int i = 0; i <= result.characters!.length -1; i++) {
+        for (int i = 0; i <= result.characters!.length - 1; i++) {
           List test = result.characters![i].split('/');
 
           String test2 = test.last;
@@ -58,15 +62,13 @@ class EpisodesBloc extends Bloc<EpisodesEvent, EpisodesState> {
           // }
 
           final CharacterResult characterResult =
-          await charUseCase!.getCharactersById(
-            id: int.parse(test2),
-          );
-          episodes.add(characterResult);
+              await charUseCase!.getCharactersById(id: int.parse(test2));
+          characters.add(characterResult);
         }
 
         emit(EpisodesLoadedInfoState(
           result: result,
-          characterResult: episodes,
+          characterResult: characters,
         ));
       } catch (e) {
         log('error is $e');

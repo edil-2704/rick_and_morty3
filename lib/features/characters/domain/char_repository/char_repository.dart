@@ -4,7 +4,7 @@ abstract class CharRepository {
   /// EN: [getAllCharacters] - getting all characters
   ///
   /// RU: [getAllCharacters] - получение всех персонажей
-  Future<CharacterModel> getAllCharacters();
+  Future<CharacterModel> getAllCharacters(int page);
 
   /// EN: [getUserById] - getting user by Id
   ///

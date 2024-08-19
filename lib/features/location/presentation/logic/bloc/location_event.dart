@@ -3,7 +3,15 @@ part of 'location_bloc.dart';
 @immutable
 sealed class LocationEvent {}
 
-class GetAllLocations extends LocationEvent {}
+class GetAllLocations extends LocationEvent {
+  final int page;
+  final bool isFirstCall;
+
+  GetAllLocations({
+    required this.page,
+    this.isFirstCall = false,
+  });
+}
 
 class GetLocationsById extends LocationEvent {
   final int id;
@@ -11,8 +19,3 @@ class GetLocationsById extends LocationEvent {
   GetLocationsById({required this.id});
 }
 
-class GetResidentEvent extends LocationEvent {
-  final LocationResult locationResult;
-
-  GetResidentEvent({required this.locationResult});
-}

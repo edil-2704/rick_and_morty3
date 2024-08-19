@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rick_and_morty/features/characters/data/models/characters_models.dart';
+import 'package:rick_and_morty/features/characters/data/repository/char_repository_impl.dart';
+import 'package:rick_and_morty/features/characters/domain/char_use_case/char_use_case.dart';
+import 'package:rick_and_morty/features/characters/presentation/screens/character_info_screen.dart';
+import 'package:rick_and_morty/features/characters/presentation/widgets/common_inkwell_char.dart';
+import 'package:rick_and_morty/features/characters/presentation/widgets/enum_funcs.dart';
 import 'package:rick_and_morty/features/location/data/models/location_image_model.dart';
 import 'package:rick_and_morty/features/location/data/models/location_model.dart';
 import 'package:rick_and_morty/features/location/data/repository/location_repository_impl.dart';
@@ -24,7 +30,8 @@ class LocationInfoScreen extends StatefulWidget {
 class _LocationInfoScreenState extends State<LocationInfoScreen> {
   final LocationBloc locationBloc = LocationBloc(
       locationUseCase:
-          LocationUseCase(locationRepositories: LocationRepositoryImpl()));
+          LocationUseCase(locationRepositories: LocationRepositoryImpl()),
+      charUseCase: CharUseCase(charRepository: CharRepositoryImpl()));
 
   @override
   void initState() {
@@ -108,7 +115,6 @@ class _LocationInfoScreenState extends State<LocationInfoScreen> {
                           'Это планета, на которой проживает человеческая раса, и главное место для персонажей Рика и Морти. Возраст этой Земли более 4,6 миллиардов лет, и она является четвертой планетой от своей звезды.',
                           style: TextStyle(
                             fontSize: 16,
-                            color: Colors.black,
                           ),
                         ),
                         SizedBox(height: 24),
@@ -123,11 +129,36 @@ class _LocationInfoScreenState extends State<LocationInfoScreen> {
                         ListView.separated(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
-                          itemCount: state.locationResult.residents?.length ?? 0,
+                          itemCount:
+                              state.locationResult.residents?.length ?? 0,
                           itemBuilder: (context, index) {
-                            return Column(children: [
+                            return Column(
+                              children: [
+                                CommonCharInkwell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            CharacterInfoScreen(
+                                          id: state.residentsModel[index].id ??
+                                              0,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  status:
+                                      '${statusConverter(state.residentsModel[index].status ?? Status.ALIVE) ?? ''}',
+                                  name:
+                                      '${state.residentsModel[index].name ?? ''}',
+                                  species:
+                                      '${speciesConverter(state.residentsModel[index].species ?? Species.HUMAN) ?? ''}, ${genderConverter(state.residentsModel[index].gender ?? Gender.UNKNOWN) ?? ''}',
+                                  imageUrl:
+                                      '${state.residentsModel[index].image ?? ''}',
+                                ),
 
-                            ],);
+                              ],
+                            );
                           },
                           separatorBuilder: (context, index) {
                             return SizedBox(height: 20.h);

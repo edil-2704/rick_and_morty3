@@ -90,6 +90,7 @@ class CommonCharListView extends StatelessWidget {
                   height: 24.h,
                   width: 24.w,
                   child: IconButton(
+
                     onPressed: () {
                       Navigator.push(
                         context,

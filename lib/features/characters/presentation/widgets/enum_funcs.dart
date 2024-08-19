@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:rick_and_morty/features/characters/data/models/characters_models.dart';
+import 'package:rick_and_morty/internal/constants/theme_helper/app_colors.dart';
 
 String? statusConverter(Status status) {
   switch (status) {
@@ -20,8 +22,6 @@ String? genderConverter(Gender gender) {
 
     case Gender.MALE:
       return 'Мужской';
-    case Gender.UNKNOWN:
-      return 'Неизвестный';
 
     default:
       return 'Неизвестный персонаж';
@@ -38,5 +38,16 @@ String? speciesConverter(Species species) {
 
     default:
       return 'Неизвестное существо';
+  }
+}
+
+Color getStatusColor(String status) {
+  switch (status) {
+    case 'Alive':
+      return AppColors.mainGreen;
+    case 'Dead':
+      return AppColors.mainRed;
+    default:
+      return Colors.grey;
   }
 }

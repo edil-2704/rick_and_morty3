@@ -8,9 +8,12 @@ class CharRepositoryImpl implements CharRepository {
   final ApiRequester apiRequester = ApiRequester();
 
   @override
-  Future<CharacterModel> getAllCharacters() async {
+  Future<CharacterModel> getAllCharacters(int page) async {
     try {
-      Response response = await apiRequester.toGet('character');
+      Response response = await apiRequester.toGet(
+        'character',
+        params: {'page': page},
+      );
 
       print('getAllCharacters = ${response.statusCode}');
       print('getAllCharacters = ${response.data}');
