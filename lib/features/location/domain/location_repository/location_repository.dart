@@ -1,6 +1,7 @@
 import 'package:rick_and_morty/features/characters/data/models/characters_models.dart';
 import 'package:rick_and_morty/features/location/data/models/location_model.dart';
 
+
 abstract class LocationRepository {
   /// EN: [getAllLocations] - getting all characters
   ///

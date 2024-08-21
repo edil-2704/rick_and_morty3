@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 import 'package:rick_and_morty/features/characters/data/models/characters_models.dart';
 import 'package:rick_and_morty/features/characters/domain/char_repository/char_repository.dart';
 import 'package:rick_and_morty/internal/helpers/api_requester/api_requester.dart';
 import 'package:rick_and_morty/internal/helpers/catch_exception/catch_exception.dart';
 
+@Injectable(as: CharRepository)
 class CharRepositoryImpl implements CharRepository {
   final ApiRequester apiRequester = ApiRequester();
 

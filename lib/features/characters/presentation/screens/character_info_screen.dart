@@ -4,18 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rick_and_morty/features/characters/data/models/characters_models.dart';
-import 'package:rick_and_morty/features/characters/data/repository/char_repository_impl.dart';
-import 'package:rick_and_morty/features/characters/domain/char_use_case/char_use_case.dart';
 import 'package:rick_and_morty/features/characters/presentation/logic/bloc/character_bloc.dart';
-import 'package:rick_and_morty/features/characters/presentation/widgets/common_column_data.dart';
-import 'package:rick_and_morty/features/characters/presentation/widgets/enum_funcs.dart';
+import 'package:rick_and_morty/features/episodes/presentation/widgets/common_shimmer.dart';
+import 'package:rick_and_morty/internal/constants/utils/common_column_data.dart';
 import 'package:rick_and_morty/features/episodes/data/models/episode_image_model.dart';
-import 'package:rick_and_morty/features/episodes/data/repository/episode_repository.dart';
-import 'package:rick_and_morty/features/episodes/domain/episode_use_case/episode_use_case.dart';
 import 'package:rick_and_morty/features/episodes/presentation/screens/episodes_info_screen.dart';
 import 'package:rick_and_morty/internal/components/date_formatter.dart';
 import 'package:rick_and_morty/internal/constants/text_helper/text_helper.dart';
 import 'package:rick_and_morty/internal/constants/theme_helper/app_colors.dart';
+import 'package:rick_and_morty/internal/constants/utils/enum_funcs.dart';
+import 'package:rick_and_morty/internal/dependencies/get_it.dart';
 
 class CharacterInfoScreen extends StatefulWidget {
   final int id;
@@ -32,14 +30,7 @@ class CharacterInfoScreen extends StatefulWidget {
 class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
   late ImagesEpisodeModel episodeModel;
 
-  final CharacterBloc characterBloc = CharacterBloc(
-    charUseCase: CharUseCase(
-      charRepository: CharRepositoryImpl(),
-    ),
-    episodeUseCase: EpisodeUseCase(
-      episodeRepository: EpisodeRepositoryImpl(),
-    ),
-  );
+  final CharacterBloc characterBloc = getIt<CharacterBloc>();
 
   @override
   void initState() {
@@ -80,8 +71,27 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
               },
               builder: (context, state) {
                 if (state is CharacterLoadingState) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
+                  return ListView.separated(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: 10,
+                    itemBuilder: (context, index) {
+                      return CommonEpisodeShimmer();
+                    },
+                    separatorBuilder: (context, index) {
+                      return SizedBox(height: 20.h);
+                    },
+                  );
+                }
+
+                if (state is CharacterErrorState) {
+                  return Center(
+                    child: ElevatedButton(
+                        onPressed: () {
+                          characterBloc
+                              .add(GetCharactersByIdEvent(id: widget.id));
+                        },
+                        child: Text('Нажмите чтобы обновить')),
                   );
                 }
 
@@ -339,7 +349,9 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  EpisodesInfoScreen(id: widget.id,),
+                                                  EpisodesInfoScreen(
+                                                id: widget.id,
+                                              ),
                                             ),
                                           );
                                         },

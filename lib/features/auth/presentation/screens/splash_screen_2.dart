@@ -5,14 +5,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rick_and_morty/features/auth/presentation/screens/login_screen.dart';
 
-class SplashScreen2 extends StatefulWidget {
-  const SplashScreen2({super.key});
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
 
   @override
-  State<SplashScreen2> createState() => _SplashScreen2State();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreen2State extends State<SplashScreen2> {
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Timer(const Duration(seconds: 3), () {
@@ -27,23 +27,17 @@ class _SplashScreen2State extends State<SplashScreen2> {
 
   }
 
-  @override
-  void dispose() {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-        overlays: SystemUiOverlay.values);
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Container(
-        height: 761.h,
+        height: 890.h,
         width: 375.w,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/splash2.png'),
+            image: AssetImage('assets/images/rm.jpg'),
           ),
         ),
       ),

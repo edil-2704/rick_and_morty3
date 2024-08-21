@@ -41,146 +41,157 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).colorScheme.surface,
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Image.asset(
-                    'assets/images/main.png',
-                    height: 377.h,
-                    width: 268.w,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Image.asset(
+                      'assets/images/main.png',
+                      height: 377.h,
+                      width: 268.w,
+                    ),
                   ),
-                ),
-                Text(S.of(context).login),
-                const SizedBox(height: 10),
-                TextFieldWidget(
-                  controller: loginController,
-                  hintText: S.of(context).login,
-                  prefixIcon: const Icon(Icons.person),
-                ),
-                const SizedBox(height: 10),
-                Text(S.of(context).password),
-                const SizedBox(height: 10),
-                TextFormField(
-                  autocorrect: false,
-                  controller: passwordController,
-                  obscureText: isHiddenPassword,
-                  validator: (value) => value != null && value.length < 6
-                      ? 'Минимум 6 символов'
-                      : null,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: const Color(0xffF2F2F2),
-                    contentPadding: EdgeInsets.symmetric(
-                      horizontal: 10.w,
-                      vertical: 15.h,
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(12.r),
-                    ),
-                    hintText: 'Введите пароль',
-                    prefixIcon: const Icon(Icons.password),
-                    suffix: InkWell(
-                      onTap: togglePasswordView,
-                      child: Icon(
-                        isHiddenPassword
-                            ? Icons.visibility_off
-                            : Icons.visibility,
-                        color: Colors.black,
+                  Text(S.of(context).login),
+                  const SizedBox(height: 10),
+                  TextFieldWidget(
+                    controller: loginController,
+                    hintText: S.of(context).login,
+                    prefixIcon: const Icon(Icons.person),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(S.of(context).password),
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    autocorrect: false,
+                    controller: passwordController,
+                    obscureText: isHiddenPassword,
+                    validator: (value) => value != null && value.length < 6
+                        ? 'Минимум 6 символов'
+                        : null,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: const Color(0xffF2F2F2),
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 10.w,
+                        vertical: 15.h,
+                      ),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                      hintText: 'Введите пароль',
+                      prefixIcon: const Icon(Icons.password),
+                      suffix: InkWell(
+                        onTap: togglePasswordView,
+                        child: Icon(
+                          isHiddenPassword
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 40),
-                BlocListener<AuthBloc, AuthState>(
-                  bloc: authBloc,
-                  listener: (context, state) {
-                    print(state);
-
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        if (state is AuthErrorState) {
-                          AlertDialog(
-                            backgroundColor: Colors.white,
-                            title: Text("Ошибка"),
-                            content: Text("Введены неверные логин или пароль"),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context); // Закрыть диалог
-                                },
-                                child: Text("Ок"),
-                              ),
-                            ],
-                          );
-                        }
-
-                        return SizedBox();
-                      },
-                    );
-
-                    if (state is AuthLoadedState) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('daaaaa')));
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => BottomNavBar(),
-                        ),
-                      );
-                    }
-                  },
-                  child: ElevatedButtonWidget(
-                    onPressed: () {
-                      authBloc.add(
-                        LoginEvent(
-                          name: loginController.text,
-                          passwordToLogin: passwordController.text,
-                        ),
-                      );
-                    },
-                    title: S.of(context).login,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Container(
-                  alignment: Alignment.bottomCenter,
-                  height: 20.h,
-                  width: MediaQuery.of(context).size.width,
-                  child: RichText(
-                    text: TextSpan(
-                      text: 'У вас еще нет аккаунта?  ',
-                      style: const TextStyle(
-                        color: Color(0xff5B6975),
-                      ),
-                      children: [
-                        TextSpan(
-                          text: S.of(context).create,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xff43D049),
+                  const SizedBox(height: 40),
+                  BlocListener<AuthBloc, AuthState>(
+                    bloc: authBloc,
+                    listener: (context, state) {
+                      print(state);
+                      if (state is AuthErrorState) {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              backgroundColor: Colors.white,
+                              title: Text("Ошибка"),
+                              content: Text("Введены неверные логин или пароль"),
+                              actions: [
+                                Center(
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      splashFactory: NoSplash.splashFactory,
+                                      shape: RoundedRectangleBorder(
+                                        side: BorderSide(
+                                          color: Color(0xff22A2BD),
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      foregroundColor: Color(0xff22A2BD),
+                                      minimumSize: Size(259.w, 40.h),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.pop(context); // Закрыть диалог
+                                    },
+                                    child: Text("Ок"),
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+        
+                      if (state is AuthLoadedState) {
+                        // ScaffoldMessenger.of(context).showSnackBar(
+                        //     const SnackBar(content: Text('daaaaa')));
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BottomNavBar(),
                           ),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) =>
-                                      const RegistrationScreen()));
-                            },
-                        ),
-                      ],
+                        );
+                      }
+                    },
+                    child: ElevatedButtonWidget(
+                      onPressed: () {
+                        authBloc.add(
+                          LoginEvent(
+                            name: loginController.text,
+                            passwordToLogin: passwordController.text,
+                          ),
+                        );
+                      },
+                      title: S.of(context).login,
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 20),
+                  Container(
+                    alignment: Alignment.bottomCenter,
+                    height: 20.h,
+                    width: MediaQuery.of(context).size.width,
+                    child: RichText(
+                      text: TextSpan(
+                        text: 'У вас еще нет аккаунта?  ',
+                        style: const TextStyle(
+                          color: Color(0xff5B6975),
+                        ),
+                        children: [
+                          TextSpan(
+                            text: S.of(context).create,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xff43D049),
+                            ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        const RegistrationScreen()));
+                              },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

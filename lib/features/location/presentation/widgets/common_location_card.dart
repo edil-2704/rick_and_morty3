@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:rick_and_morty/features/characters/presentation/widgets/common_progress_indicator.dart';
+import 'package:rick_and_morty/internal/constants/utils/common_progress_indicator.dart';
 import 'package:rick_and_morty/features/location/data/models/location_image_model.dart';
 import 'package:rick_and_morty/features/location/data/models/location_model.dart';
 import 'package:rick_and_morty/features/location/presentation/logic/bloc/location_bloc.dart';
@@ -28,93 +28,89 @@ class _CommonLocationCardState extends State<CommonLocationCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(height: 20),
-        ListView.separated(
+    return Center(
+      child: ListView.separated(
+        shrinkWrap: true,
+        controller: widget.scrollController,
+        itemCount: widget.locationsList.length ?? 0,
+        itemBuilder: (context, index) {
+          final url = imagesLocation.getNextImageUrl();
 
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: widget.locationsList.length ?? 0,
-          itemBuilder: (context, index) {
-            final url = imagesLocation.getNextImageUrl();
+          if (index >= widget.locationsList.length - 1) {
+            return Padding(
+              padding: EdgeInsets.symmetric(vertical: 5.h),
+              child: CommonProgressIndicator(),
+            );
+          }
 
-            if (index >= widget.locationsList.length - 1) {
-              return Padding(
-                padding: EdgeInsets.symmetric(vertical: 5.h),
-                child: CommonProgressIndicator(),
+          return InkWell(
+            splashFactory: NoSplash.splashFactory,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LocationInfoScreen(
+                    id: widget.locationsList[index].id ?? 0,
+                  ),
+                ),
               );
-            }
-
-            return InkWell(
-              splashFactory: NoSplash.splashFactory,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => LocationInfoScreen(
-                      id: widget.locationsList[index].id ?? 0,
+            },
+            child: Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 20.h),
+                  Card(
+                    color: Theme.of(context)
+                        .bottomNavigationBarTheme
+                        .backgroundColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ClipRRect(
+                          borderRadius: const BorderRadius.vertical(
+                              top: Radius.circular(16)),
+                          child: Image.network(
+                            url,
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            height: 218.h,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.locationsList[index].name ?? '',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                '${widget.locationsList[index].type ?? ''} , ${widget.locationsList[index].dimension ?? ''}',
+                                style: TextHelper.charSexText,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                );
-              },
-              child: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Card(
-                      color: Theme.of(context)
-                          .bottomNavigationBarTheme
-                          .backgroundColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: const BorderRadius.vertical(
-                                top: Radius.circular(16)),
-                            child: Image.network(
-                              url,
-                              fit: BoxFit.cover,
-                              width: double.infinity,
-                              height: 218.h,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  widget.locationsList[index].name ?? '',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  '${widget.locationsList[index].type ?? ''} , ${widget.locationsList[index].dimension ?? ''}',
-                                  style: TextHelper.charSexText,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                ],
               ),
-            );
-          },
-          separatorBuilder: (context, index) {
-            return const SizedBox(height: 20);
-          },
-        ),
-      ],
+            ),
+          );
+        },
+        separatorBuilder: (context, index) {
+          return const SizedBox(height: 20);
+        },
+      ),
     );
   }
 }

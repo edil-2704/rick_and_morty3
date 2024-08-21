@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:rick_and_morty/internal/helpers/catch_exception/catch_exception.dart';
 
-
 class ApiRequester {
   final String url = 'https://rickandmortyapi.com/api/';
 
@@ -23,8 +22,6 @@ class ApiRequester {
       return dio.get(
         url,
         queryParameters: params,
-
-       
       );
     } catch (e) {
       throw CatchException.convertException(e);

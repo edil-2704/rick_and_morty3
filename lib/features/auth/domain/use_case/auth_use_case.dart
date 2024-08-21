@@ -18,4 +18,8 @@ class AuthUseCase {
       {required String email, required String password}) async {
     return await authRepository.signUp(email: email, password: password);
   }
+
+  Future<UserCredential?> signOut () async {
+    return await authRepository.signOut();
+  }
 }

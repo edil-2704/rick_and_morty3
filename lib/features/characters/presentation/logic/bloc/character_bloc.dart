@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 import 'package:rick_and_morty/features/characters/data/models/characters_models.dart';
 import 'package:rick_and_morty/features/characters/domain/char_use_case/char_use_case.dart';
@@ -10,6 +11,7 @@ part 'character_event.dart';
 
 part 'character_state.dart';
 
+@injectable
 class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
   final CharUseCase charUseCase;
   final EpisodeUseCase? episodeUseCase;

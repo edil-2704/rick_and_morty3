@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 import 'package:rick_and_morty/features/characters/data/models/characters_models.dart';
 import 'package:rick_and_morty/features/characters/domain/char_use_case/char_use_case.dart';
@@ -12,6 +13,7 @@ part 'location_event.dart';
 
 part 'location_state.dart';
 
+@injectable
 class LocationBloc extends Bloc<LocationEvent, LocationState> {
   final LocationUseCase locationUseCase;
   final CharUseCase charUseCase;
@@ -21,6 +23,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     required this.charUseCase,
   }) : super(LocationInitialState()) {
     on<GetAllLocations>((event, emit) async {
+
       if (event.isFirstCall) {
         emit(LocationLoadingState());
       }

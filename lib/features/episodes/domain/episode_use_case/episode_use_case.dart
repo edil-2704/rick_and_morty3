@@ -1,3 +1,4 @@
+import 'package:injectable/injectable.dart';
 import 'package:rick_and_morty/features/episodes/data/models/episode_models.dart';
 import 'package:rick_and_morty/features/episodes/domain/episode_repository/episode_repository.dart';
 
@@ -5,6 +6,7 @@ import 'package:rick_and_morty/features/episodes/domain/episode_repository/episo
 ///
 /// RU: [EpisodeUseCase] - Юзкейс для работы episodes
 
+@injectable
 class EpisodeUseCase {
   final EpisodeRepository episodeRepository;
 

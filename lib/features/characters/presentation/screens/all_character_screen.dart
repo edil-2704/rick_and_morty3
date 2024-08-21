@@ -5,12 +5,15 @@ import 'package:rick_and_morty/features/characters/data/models/characters_models
 import 'package:rick_and_morty/features/characters/data/repository/char_repository_impl.dart';
 import 'package:rick_and_morty/features/characters/domain/char_use_case/char_use_case.dart';
 import 'package:rick_and_morty/features/characters/presentation/logic/bloc/character_bloc.dart';
-import 'package:rick_and_morty/features/characters/presentation/widgets/search_widget.dart';
+import 'package:rick_and_morty/features/characters/presentation/widgets/common_chars_shimmer.dart';
+
 import 'package:rick_and_morty/features/characters/presentation/widgets/to_grid_view.dart';
 import 'package:rick_and_morty/features/characters/presentation/widgets/to_list_view.dart';
 import 'package:rick_and_morty/features/episodes/data/repository/episode_repository.dart';
 import 'package:rick_and_morty/features/episodes/domain/episode_use_case/episode_use_case.dart';
 import 'package:rick_and_morty/internal/constants/text_helper/text_helper.dart';
+import 'package:rick_and_morty/internal/constants/utils/search_widget.dart';
+import 'package:rick_and_morty/internal/dependencies/get_it.dart';
 
 class AllCharacterScreen extends StatefulWidget {
   const AllCharacterScreen({super.key});
@@ -22,14 +25,7 @@ class AllCharacterScreen extends StatefulWidget {
 class _AllCharacterScreenState extends State<AllCharacterScreen> {
   TextEditingController searchTextController = TextEditingController();
 
-  final CharacterBloc characterBloc = CharacterBloc(
-    charUseCase: CharUseCase(
-      charRepository: CharRepositoryImpl(),
-    ),
-    episodeUseCase: EpisodeUseCase(
-      episodeRepository: EpisodeRepositoryImpl(),
-    ),
-  );
+  final CharacterBloc characterBloc = getIt<CharacterBloc>();
 
   bool isListView = true;
   late final ScrollController scrollController;
@@ -143,10 +139,17 @@ class _AllCharacterScreenState extends State<AllCharacterScreen> {
                     },
                     builder: (context, state) {
                       if (state is CharacterLoadingState) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
+                        return ListView.separated(
+                          itemCount: 15,
+                          itemBuilder: (context, index) {
+                            return CommonCharsShimmer();
+                          },
+                          separatorBuilder: (context, index) {
+                            return SizedBox(height: 20.h);
+                          },
                         );
                       }
+
                       if (state is CharacterLoadedState) {
                         return isListView
                             ? ToListViewSeparated(

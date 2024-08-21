@@ -4,12 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:rick_and_morty/features/auth/presentation/screens/login_screen.dart';
 import 'package:rick_and_morty/features/auth/presentation/screens/splash_screen_2.dart';
 import 'package:rick_and_morty/firebase_options.dart';
 import 'package:rick_and_morty/generated/l10n.dart';
 import 'package:rick_and_morty/internal/components/bottom_navbar.dart';
 import 'package:rick_and_morty/internal/constants/theme_mode/theme_provider.dart';
+import 'package:rick_and_morty/internal/dependencies/get_it.dart';
 import 'package:rick_and_morty/internal/helpers/localization/bloc/localization_bloc.dart';
 import 'package:rick_and_morty/internal/helpers/localization/localization_hive.dart';
 
@@ -21,8 +21,10 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  configureDependencies();
 
   runApp(ChangeNotifierProvider(
+
     create: (context) => ThemeProvider(),
     child: const MyApp(),
   ));
@@ -71,7 +73,7 @@ class _MyAppState extends State<MyApp> {
                 debugShowCheckedModeBanner: false,
                 title: 'Flutter Demo',
                 theme: Provider.of<ThemeProvider>(context).themeData,
-                home: const BottomNavBar(),
+                home: const SplashScreen(),
               );
             },
           );

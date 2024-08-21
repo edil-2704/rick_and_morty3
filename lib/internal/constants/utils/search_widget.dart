@@ -4,12 +4,14 @@ class SearchWidget extends StatelessWidget {
   final TextEditingController searchTextController;
   final String hintText;
   final VoidCallback? onPressed;
+  final VoidCallback? onChanged;
 
   const SearchWidget({
     super.key,
     required this.searchTextController,
     required this.hintText,
     this.onPressed,
+    this.onChanged,
   });
 
   @override

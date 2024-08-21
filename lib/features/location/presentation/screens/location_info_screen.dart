@@ -5,13 +5,15 @@ import 'package:rick_and_morty/features/characters/data/models/characters_models
 import 'package:rick_and_morty/features/characters/data/repository/char_repository_impl.dart';
 import 'package:rick_and_morty/features/characters/domain/char_use_case/char_use_case.dart';
 import 'package:rick_and_morty/features/characters/presentation/screens/character_info_screen.dart';
-import 'package:rick_and_morty/features/characters/presentation/widgets/common_inkwell_char.dart';
-import 'package:rick_and_morty/features/characters/presentation/widgets/enum_funcs.dart';
+import 'package:rick_and_morty/features/characters/presentation/widgets/common_chars_shimmer.dart';
+import 'package:rick_and_morty/features/episodes/presentation/widgets/common_shimmer.dart';
 import 'package:rick_and_morty/features/location/data/models/location_image_model.dart';
-import 'package:rick_and_morty/features/location/data/models/location_model.dart';
 import 'package:rick_and_morty/features/location/data/repository/location_repository_impl.dart';
 import 'package:rick_and_morty/features/location/domain/location_use_case/location_use_case.dart';
 import 'package:rick_and_morty/features/location/presentation/logic/bloc/location_bloc.dart';
+import 'package:rick_and_morty/internal/constants/utils/common_inkwell_char.dart';
+import 'package:rick_and_morty/internal/constants/utils/enum_funcs.dart';
+import 'package:rick_and_morty/internal/dependencies/get_it.dart';
 
 class LocationInfoScreen extends StatefulWidget {
   final int id;
@@ -28,10 +30,7 @@ class LocationInfoScreen extends StatefulWidget {
 }
 
 class _LocationInfoScreenState extends State<LocationInfoScreen> {
-  final LocationBloc locationBloc = LocationBloc(
-      locationUseCase:
-          LocationUseCase(locationRepositories: LocationRepositoryImpl()),
-      charUseCase: CharUseCase(charRepository: CharRepositoryImpl()));
+  final LocationBloc locationBloc = getIt<LocationBloc>();
 
   @override
   void initState() {
@@ -85,9 +84,31 @@ class _LocationInfoScreenState extends State<LocationInfoScreen> {
                   }
                 },
                 builder: (context, state) {
-                  if (state is LocationLoadingState) {
+                  if (state is LocationErrorState) {
                     return Center(
-                      child: CircularProgressIndicator(),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            locationBloc.add(GetLocationsById(id: widget.id));
+                          },
+                          child: Text('Нажмите чтобы обновить')),
+                    );
+                  }
+                  if (state is LocationLoadingState) {
+                    return Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Center(
+                        child: ListView.separated(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: 10,
+                          itemBuilder: (context, index) {
+                            return CommonCharsShimmer();
+                          },
+                          separatorBuilder: (context, index) {
+                            return SizedBox(height: 20.h);
+                          },
+                        ),
+                      ),
                     );
                   }
 
@@ -156,7 +177,6 @@ class _LocationInfoScreenState extends State<LocationInfoScreen> {
                                   imageUrl:
                                       '${state.residentsModel[index].image ?? ''}',
                                 ),
-
                               ],
                             );
                           },

@@ -1,11 +1,13 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 import 'package:rick_and_morty/features/characters/data/models/characters_models.dart';
 import 'package:rick_and_morty/features/location/data/models/location_model.dart';
 import 'package:rick_and_morty/features/location/domain/location_repository/location_repository.dart';
 import 'package:rick_and_morty/internal/helpers/api_requester/api_requester.dart';
 import 'package:rick_and_morty/internal/helpers/catch_exception/catch_exception.dart';
 
+@Injectable(as: LocationRepository)
 class LocationRepositoryImpl implements LocationRepository {
   final ApiRequester apiRequester = ApiRequester();
 

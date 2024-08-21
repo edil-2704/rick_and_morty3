@@ -1,4 +1,10 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:rick_and_morty/features/settings/screens/profile_editing_screen.dart';
 import 'package:rick_and_morty/internal/constants/text_helper/text_helper.dart';
@@ -13,6 +19,27 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  final user = FirebaseAuth.instance.currentUser;
+
+  //doc IDs
+  List<String> docId = [];
+
+  //get docsID
+  Future getClient() async {
+    await FirebaseFirestore.instance.collection('client').get().then(
+          (snapshot) => snapshot.docs.forEach((document) {
+            print(document.reference);
+            docId.add(document.reference.id);
+          }),
+        );
+  }
+
+  @override
+  void initState() {
+    getClient();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     ThemeProvider themeProvider = Provider.of<ThemeProvider>(context);
@@ -45,7 +72,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Oleg Belotserkovsky',
+                      '${user?.email}',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -188,13 +215,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   ),
                                   TextButton(
                                     onPressed: () {
-                                      Navigator.pop(context); // Close the dialog
+                                      Navigator.pop(
+                                          context); // Close the dialog
                                     },
                                     child: Text('ОТМЕНА'),
                                   ),
                                 ],
                               ),
-
                             );
                           },
                         );
@@ -240,6 +267,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                 ),
               ],
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
+            Center(
+              child: MaterialButton(
+                  color: AppColors.mainBlue,
+                  child: Text('SignOut'),
+                  onPressed: () {
+                    FirebaseAuth.instance.signOut();
+                  }),
             ),
           ],
         ),

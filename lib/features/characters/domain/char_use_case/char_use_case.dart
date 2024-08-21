@@ -1,3 +1,4 @@
+import 'package:injectable/injectable.dart';
 import 'package:rick_and_morty/features/characters/data/models/characters_models.dart';
 import 'package:rick_and_morty/features/characters/domain/char_repository/char_repository.dart';
 
@@ -5,6 +6,7 @@ import 'package:rick_and_morty/features/characters/domain/char_repository/char_r
 ///
 /// RU: [CharUseCase] - Юзкейс для работы пользователей
 
+@injectable
 class CharUseCase {
   final CharRepository charRepository;
 

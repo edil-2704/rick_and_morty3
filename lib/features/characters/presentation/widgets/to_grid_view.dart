@@ -6,10 +6,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rick_and_morty/features/characters/data/models/characters_models.dart';
 import 'package:rick_and_morty/features/characters/presentation/logic/bloc/character_bloc.dart';
 import 'package:rick_and_morty/features/characters/presentation/screens/character_info_screen.dart';
-import 'package:rick_and_morty/features/characters/presentation/widgets/common_progress_indicator.dart';
-import 'package:rick_and_morty/features/characters/presentation/widgets/enum_funcs.dart';
+import 'package:rick_and_morty/internal/constants/utils/common_progress_indicator.dart';
+
 import 'package:rick_and_morty/internal/constants/text_helper/text_helper.dart';
 import 'package:rick_and_morty/internal/constants/theme_helper/app_colors.dart';
+import 'package:rick_and_morty/internal/constants/utils/enum_funcs.dart';
 
 class ToGridViewSeparated extends StatefulWidget {
   final List<CharacterResult> charactersList;
