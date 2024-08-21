@@ -2,15 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rick_and_morty/features/characters/data/models/characters_models.dart';
-import 'package:rick_and_morty/features/characters/data/repository/char_repository_impl.dart';
-import 'package:rick_and_morty/features/characters/domain/char_use_case/char_use_case.dart';
 import 'package:rick_and_morty/features/characters/presentation/logic/bloc/character_bloc.dart';
 import 'package:rick_and_morty/features/characters/presentation/widgets/common_chars_shimmer.dart';
-
 import 'package:rick_and_morty/features/characters/presentation/widgets/to_grid_view.dart';
 import 'package:rick_and_morty/features/characters/presentation/widgets/to_list_view.dart';
-import 'package:rick_and_morty/features/episodes/data/repository/episode_repository.dart';
-import 'package:rick_and_morty/features/episodes/domain/episode_use_case/episode_use_case.dart';
 import 'package:rick_and_morty/internal/constants/text_helper/text_helper.dart';
 import 'package:rick_and_morty/internal/constants/utils/search_widget.dart';
 import 'package:rick_and_morty/internal/dependencies/get_it.dart';
@@ -67,10 +62,12 @@ class _AllCharacterScreenState extends State<AllCharacterScreen> {
       body: RefreshIndicator(
         onRefresh: () async {
           charactersList.clear();
-          characterBloc.add(GetAllCharactersEvent(
-            page: page,
-            isFirstCall: true,
-          ));
+          characterBloc.add(
+            GetAllCharactersEvent(
+              page: page,
+              isFirstCall: true,
+            ),
+          );
         },
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -95,7 +92,7 @@ class _AllCharacterScreenState extends State<AllCharacterScreen> {
                             );
                           }
 
-                          return SizedBox();
+                          return const SizedBox.shrink();
                         },
                       ),
                     ),
@@ -142,7 +139,7 @@ class _AllCharacterScreenState extends State<AllCharacterScreen> {
                         return ListView.separated(
                           itemCount: 15,
                           itemBuilder: (context, index) {
-                            return CommonCharsShimmer();
+                            return const CommonCharsShimmer();
                           },
                           separatorBuilder: (context, index) {
                             return SizedBox(height: 20.h);
@@ -164,11 +161,12 @@ class _AllCharacterScreenState extends State<AllCharacterScreen> {
                       if (state is CharacterErrorState) {
                         return Center(
                           child: ElevatedButton(
-                              onPressed: () {
-                                characterBloc
-                                    .add(GetAllCharactersEvent(page: page));
-                              },
-                              child: Text('Нажмите чтобы обновить')),
+                            onPressed: () {
+                              characterBloc
+                                  .add(GetAllCharactersEvent(page: page));
+                            },
+                            child: const Text('Нажмите чтобы обновить'),
+                          ),
                         );
                       }
                       return const Center(

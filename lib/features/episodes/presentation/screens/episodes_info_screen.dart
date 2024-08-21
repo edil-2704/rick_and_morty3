@@ -1,22 +1,14 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:rick_and_morty/features/characters/data/models/characters_models.dart';
-import 'package:rick_and_morty/features/characters/data/repository/char_repository_impl.dart';
-import 'package:rick_and_morty/features/characters/domain/char_use_case/char_use_case.dart';
 import 'package:rick_and_morty/features/characters/presentation/widgets/common_chars_shimmer.dart';
-
 import 'package:rick_and_morty/features/episodes/data/models/episode_image_model.dart';
-import 'package:rick_and_morty/features/episodes/data/repository/episode_repository.dart';
-import 'package:rick_and_morty/features/episodes/domain/episode_use_case/episode_use_case.dart';
 import 'package:rick_and_morty/features/episodes/presentation/logic/bloc/episodes_bloc.dart';
 import 'package:rick_and_morty/features/episodes/presentation/widgets/common_char_list_view.dart';
-import 'package:rick_and_morty/internal/components/date_formatter.dart';
 import 'package:rick_and_morty/internal/constants/text_helper/text_helper.dart';
 import 'package:rick_and_morty/internal/constants/theme_helper/app_colors.dart';
 import 'package:rick_and_morty/internal/dependencies/get_it.dart';
+import '../../../../internal/commons/date_formatter.dart';
 
 class EpisodesInfoScreen extends StatefulWidget {
   final int id;
@@ -31,6 +23,7 @@ class _EpisodesInfoScreenState extends State<EpisodesInfoScreen> {
   late final ImagesEpisodeModel episodeModel;
 
   final EpisodesBloc episodesBloc = getIt<EpisodesBloc>();
+
   @override
   void initState() {
     episodesBloc.add(GetEpisodesById(id: widget.id));
@@ -79,15 +72,17 @@ class _EpisodesInfoScreenState extends State<EpisodesInfoScreen> {
                   Positioned(
                     top: 235,
                     left: 120.w,
-                    child: Container(
+                    child: SizedBox(
                       height: 132.h,
                       width: 132.w,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(66.0),
-                        image: const DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage(
-                            'assets/images/vector.png',
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(66.0),
+                          image: const DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage(
+                              'assets/images/vector.png',
+                            ),
                           ),
                         ),
                       ),
@@ -116,10 +111,10 @@ class _EpisodesInfoScreenState extends State<EpisodesInfoScreen> {
                       child: Center(
                         child: ListView.separated(
                           shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           itemCount: 10,
                           itemBuilder: (context, index) {
-                            return CommonCharsShimmer();
+                            return const CommonCharsShimmer();
                           },
                           separatorBuilder: (context, index) {
                             return SizedBox(height: 20.h);
@@ -135,7 +130,7 @@ class _EpisodesInfoScreenState extends State<EpisodesInfoScreen> {
                           onPressed: () {
                             episodesBloc.add(GetEpisodesById(id: widget.id));
                           },
-                          child: Text('Нажмите чтобы обновить')),
+                          child: const Text('Нажмите чтобы обновить')),
                     );
                   }
 
@@ -150,7 +145,7 @@ class _EpisodesInfoScreenState extends State<EpisodesInfoScreen> {
                               Center(
                                 child: Text(
                                   state.result.name ?? '',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 24,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -159,16 +154,16 @@ class _EpisodesInfoScreenState extends State<EpisodesInfoScreen> {
                               Center(
                                 child: Text(
                                   state.result.episode ?? '',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: AppColors.mainBlue,
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 35),
-                              Text(
+                              const SizedBox(height: 35),
+                              const Text(
                                 'Зигерионцы помещают Джерри и Рика в симуляцию, чтобы узнать секрет изготовления концен-трирован- ной темной материи.',
                               ),
-                              SizedBox(height: 20),
+                              const SizedBox(height: 20),
                               Text(
                                 'Премьера',
                                 style: TextHelper.charSexText,
@@ -178,7 +173,7 @@ class _EpisodesInfoScreenState extends State<EpisodesInfoScreen> {
                                         ?.millisecondsSinceEpoch ??
                                     0),
                               ),
-                              SizedBox(height: 20),
+                              const SizedBox(height: 20),
                               Divider(height: 5.h),
                               Text(
                                 'Персонажи',
@@ -196,7 +191,7 @@ class _EpisodesInfoScreenState extends State<EpisodesInfoScreen> {
                     );
                   }
 
-                  return SizedBox();
+                  return const SizedBox();
                 }),
           ],
         ),

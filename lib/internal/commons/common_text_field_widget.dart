@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class TextFieldWidget extends StatefulWidget {
+class CommonTextFieldWidget extends StatefulWidget {
   final TextEditingController controller;
   final String hintText;
   final TextInputType? textInputType;
@@ -10,7 +10,7 @@ class TextFieldWidget extends StatefulWidget {
   final Widget? suffixIcon;
   final bool? isHiddenPassword;
 
-  const TextFieldWidget({
+  const CommonTextFieldWidget({
     super.key,
     required this.controller,
     required this.hintText,
@@ -21,10 +21,10 @@ class TextFieldWidget extends StatefulWidget {
   });
 
   @override
-  State<TextFieldWidget> createState() => _TextFieldWidgetState();
+  State<CommonTextFieldWidget> createState() => _CommonTextFieldWidgetState();
 }
 
-class _TextFieldWidgetState extends State<TextFieldWidget> {
+class _CommonTextFieldWidgetState extends State<CommonTextFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(

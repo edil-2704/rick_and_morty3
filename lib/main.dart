@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 import 'package:rick_and_morty/features/auth/presentation/screens/splash_screen_2.dart';
 import 'package:rick_and_morty/firebase_options.dart';
 import 'package:rick_and_morty/generated/l10n.dart';
-import 'package:rick_and_morty/internal/components/bottom_navbar.dart';
 import 'package:rick_and_morty/internal/constants/theme_mode/theme_provider.dart';
 import 'package:rick_and_morty/internal/dependencies/get_it.dart';
 import 'package:rick_and_morty/internal/helpers/localization/bloc/localization_bloc.dart';

@@ -1,21 +1,18 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rick_and_morty/internal/constants/utils/common_progress_indicator.dart';
 import 'package:rick_and_morty/features/episodes/data/models/episode_image_model.dart';
 import 'package:rick_and_morty/features/episodes/data/models/episode_models.dart';
-import 'package:rick_and_morty/features/episodes/data/repository/episode_repository.dart';
-import 'package:rick_and_morty/features/episodes/domain/episode_use_case/episode_use_case.dart';
 import 'package:rick_and_morty/features/episodes/presentation/logic/bloc/episodes_bloc.dart';
 import 'package:rick_and_morty/features/episodes/presentation/screens/episodes_info_screen.dart';
 import 'package:rick_and_morty/features/episodes/presentation/widgets/common_shimmer.dart';
-import 'package:rick_and_morty/internal/components/date_formatter.dart';
 import 'package:rick_and_morty/internal/constants/text_helper/text_helper.dart';
 import 'package:rick_and_morty/internal/constants/theme_helper/app_colors.dart';
 import 'package:rick_and_morty/internal/constants/utils/search_widget.dart';
 import 'package:rick_and_morty/internal/dependencies/get_it.dart';
+import '../../../../internal/commons/date_formatter.dart';
 
 class AllEpisodesScreen extends StatefulWidget {
   const AllEpisodesScreen({super.key});
@@ -91,7 +88,7 @@ class _AllEpisodesScreenState extends State<AllEpisodesScreen> {
                     labelColor: Theme.of(context)
                         .bottomNavigationBarTheme
                         .selectedItemColor,
-                    tabs: [
+                    tabs: const [
                       Tab(
                         child: Text(
                           'Сезон 1',
@@ -143,10 +140,10 @@ class _AllEpisodesScreenState extends State<AllEpisodesScreen> {
                           return Center(
                             child: ListView.separated(
                               shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
+                              physics: const NeverScrollableScrollPhysics(),
                               itemCount: 10,
                               itemBuilder: (context, index) {
-                                return CommonEpisodeShimmer();
+                                return const CommonEpisodeShimmer();
                               },
                               separatorBuilder: (context, index) {
                                 return SizedBox(height: 20.h);
@@ -161,7 +158,7 @@ class _AllEpisodesScreenState extends State<AllEpisodesScreen> {
                                 onPressed: () {
                                   bloc.add(GetAllEpisodes(page: page));
                                 },
-                                child: Text('Нажмите чтобы обновить')),
+                                child: const Text('Нажмите чтобы обновить')),
                           );
                         }
 
@@ -233,7 +230,7 @@ class _AllEpisodesScreenState extends State<AllEpisodesScreen> {
                                                     episodesList[index]
                                                             .episode ??
                                                         '',
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       color: AppColors.mainBlue,
                                                     ),
                                                   ),
@@ -242,16 +239,18 @@ class _AllEpisodesScreenState extends State<AllEpisodesScreen> {
                                                         TextOverflow.ellipsis,
                                                     episodesList[index].name ??
                                                         '',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold),
+                                                    style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
                                                   ),
                                                   Text(
-                                                    dateConverter(episodesList[
-                                                                index]
-                                                            .created
-                                                            ?.millisecondsSinceEpoch ??
-                                                        0),
+                                                    dateConverter(
+                                                      episodesList[index]
+                                                              .created
+                                                              ?.millisecondsSinceEpoch ??
+                                                          0,
+                                                    ),
                                                     style:
                                                         TextHelper.charSexText,
                                                   ),
@@ -271,7 +270,7 @@ class _AllEpisodesScreenState extends State<AllEpisodesScreen> {
                             },
                           );
                         }
-                        return const SizedBox();
+                        return const SizedBox.shrink();
                       },
                     ),
                   ),

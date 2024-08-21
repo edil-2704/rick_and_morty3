@@ -1,11 +1,9 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:rick_and_morty/features/auth/presentation/screens/login_screen.dart';
 import 'package:rick_and_morty/features/settings/screens/profile_editing_screen.dart';
 import 'package:rick_and_morty/internal/constants/text_helper/text_helper.dart';
 import 'package:rick_and_morty/internal/constants/theme_helper/app_colors.dart';
@@ -20,6 +18,18 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   final user = FirebaseAuth.instance.currentUser;
+
+  Future<void> signOut() async {
+    final navigator = Navigator.of(context);
+
+    await FirebaseAuth.instance.signOut();
+
+    navigator.pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => const LoginScreen(),
+        ),
+        (Route<dynamic> route) => false);
+  }
 
   //doc IDs
   List<String> docId = [];
@@ -48,7 +58,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text(
+        title: const Text(
           'Настройки',
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -63,22 +73,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
           children: [
             Row(
               children: [
-                CircleAvatar(
+                const CircleAvatar(
                   backgroundImage: AssetImage('assets/images/ea.png'),
                   radius: 36,
                 ),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       '${user?.email}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text(
+                    const Text(
                       'Rick',
                       style: TextStyle(
                         fontSize: 16,
@@ -88,44 +98,46 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Center(
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ProfileEditingScreen()));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ProfileEditingScreen(),
+                    ),
+                  );
                 },
                 child: Text('Редактировать'),
                 style: ElevatedButton.styleFrom(
                   splashFactory: NoSplash.splashFactory,
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(
+                    side: const BorderSide(
                       color: Color(0xff22A2BD),
                     ),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  foregroundColor: Color(0xff22A2BD),
-                  minimumSize: Size(335, 48),
+                  foregroundColor: const Color(0xff22A2BD),
+                  minimumSize: const Size(335, 48),
                 ),
               ),
             ),
-            SizedBox(height: 30),
-            Divider(),
-            SizedBox(height: 20),
+            const SizedBox(height: 30),
+            const Divider(),
+            const SizedBox(height: 20),
             Row(
               children: [
-                Icon(Icons.color_lens_outlined),
-                SizedBox(width: 10),
-                Text(
+                const Icon(Icons.color_lens_outlined),
+                const SizedBox(width: 10),
+                const Text(
                   'Темная тема',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 IconButton(
                   onPressed: () {
                     showDialog(
@@ -133,6 +145,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       builder: (context) {
                         int selectedValue = themeProvider.isDarkMode ? 2 : 1;
 
+                        ///TODO: выносить отдельным виджетом
                         return StatefulBuilder(
                           builder: (context, setState) {
                             return AlertDialog(
@@ -140,7 +153,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   .bottomNavigationBarTheme
                                   .backgroundColor,
                               surfaceTintColor: Colors.blue,
-                              title: Text('Темная тема'),
+                              title: const Text('Темная тема'),
                               content: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
@@ -157,7 +170,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           });
                                         },
                                       ),
-                                      Expanded(child: Text('Выключена')),
+                                      const Expanded(child: Text('Выключена')),
                                     ],
                                   ),
                                   Row(
@@ -173,7 +186,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           });
                                         },
                                       ),
-                                      Expanded(child: Text('Включена')),
+                                      const Expanded(child: Text('Включена')),
                                     ],
                                   ),
                                   Row(
@@ -189,9 +202,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           });
                                         },
                                       ),
-                                      Expanded(
-                                          child: Text(
-                                              'Следовать настройкам системы')),
+                                      const Expanded(
+                                        child: Text(
+                                          'Следовать настройкам системы',
+                                        ),
+                                      ),
                                     ],
                                   ),
                                   Row(
@@ -207,7 +222,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           });
                                         },
                                       ),
-                                      Expanded(
+                                      const Expanded(
                                         child:
                                             Text('В режиме энергосбережения'),
                                       ),
@@ -218,7 +233,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       Navigator.pop(
                                           context); // Close the dialog
                                     },
-                                    child: Text('ОТМЕНА'),
+                                    child: const Text('ОТМЕНА'),
                                   ),
                                 ],
                               ),
@@ -228,13 +243,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       },
                     );
                   },
-                  icon: Icon(Icons.arrow_forward_ios_sharp),
+                  icon: const Icon(Icons.arrow_forward_ios_sharp),
                 ),
               ],
             ),
-            SizedBox(height: 30),
-            Divider(),
-            Text(
+            const SizedBox(height: 30),
+            const Divider(),
+            const Text(
               'О ПРИЛОЖЕНИИ',
               style: TextStyle(
                 fontSize: 18,
@@ -242,8 +257,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 color: AppColors.mainGrey,
               ),
             ),
-            SizedBox(height: 30),
-            Text(
+            const SizedBox(height: 30),
+            const Text(
               maxLines: 4,
               'Затворщики помещают Джерри и Рика в симуляцию, чтобы узнать секрет изготовления концептуально-тяжелой темной материи.',
               style: TextStyle(
@@ -251,15 +266,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             Column(
               children: [
                 Text(
                   'Версия приложения',
                   style: TextHelper.charSexText,
                 ),
-                SizedBox(height: 30),
-                Text(
+                const SizedBox(height: 30),
+                const Text(
                   'Rick & Morty v1.0.0',
                   style: TextStyle(
                     fontSize: 14,
@@ -268,15 +283,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ],
             ),
-            SizedBox(
-              height: 20.h,
-            ),
+            SizedBox(height: 20.h),
             Center(
               child: MaterialButton(
                   color: AppColors.mainBlue,
-                  child: Text('SignOut'),
+                  child: const Text('SignOut'),
                   onPressed: () {
-                    FirebaseAuth.instance.signOut();
+                    signOut();
                   }),
             ),
           ],

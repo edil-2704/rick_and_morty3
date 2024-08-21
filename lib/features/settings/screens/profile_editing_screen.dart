@@ -4,7 +4,6 @@ import 'package:rick_and_morty/features/settings/screens/profile_name_edit.dart'
 import 'package:rick_and_morty/internal/constants/utils/common_column_data.dart';
 import 'package:rick_and_morty/internal/constants/theme_helper/app_colors.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'dart:io';
 
 class ProfileEditingScreen extends StatefulWidget {
@@ -25,16 +24,14 @@ class _ProfileEditingScreenState extends State<ProfileEditingScreen> {
     });
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
-        title: Text('Редактировать профиль'),
+        title: const Text('Редактировать профиль'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -50,7 +47,7 @@ class _ProfileEditingScreenState extends State<ProfileEditingScreen> {
                   radius: 75.r,
                   backgroundImage: selectedImage != null
                       ? FileImage(selectedImage!)
-                      : AssetImage('assets/images/ea.png')
+                      : const AssetImage('assets/images/ea.png')
                           as ImageProvider // Path to the profile image
                   ),
             ),
@@ -58,9 +55,8 @@ class _ProfileEditingScreenState extends State<ProfileEditingScreen> {
               child: TextButton(
                 onPressed: () {
                   _pickImageFromGallery();
-
                 },
-                child: Text(
+                child: const Text(
                   'Изменить фото',
                   style: TextStyle(
                     color: AppColors.mainBlue,
@@ -70,15 +66,14 @@ class _ProfileEditingScreenState extends State<ProfileEditingScreen> {
               ),
             ),
             SizedBox(height: 20.h),
-
             Text(
               'профиль'.toUpperCase(),
-              style: TextStyle(color: AppColors.mainGrey),
+              style: const TextStyle(color: AppColors.mainGrey),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Row(
               children: [
-                Expanded(
+                const Expanded(
                   child: CommonCharDataWidget(
                     tittle: 'Изменить ФИО',
                     subTittle: 'Oleg Belotserkovsky',
@@ -89,16 +84,16 @@ class _ProfileEditingScreenState extends State<ProfileEditingScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ProfileNameEdit()));
+                            builder: (context) => const ProfileNameEdit()));
                   },
-                  icon: Icon(Icons.arrow_forward_ios_sharp),
+                  icon: const Icon(Icons.arrow_forward_ios_sharp),
                 ),
               ],
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Row(
               children: [
-                Expanded(
+                const Expanded(
                   child: CommonCharDataWidget(
                     tittle: 'Логин',
                     subTittle: 'Rick',
@@ -107,15 +102,17 @@ class _ProfileEditingScreenState extends State<ProfileEditingScreen> {
                 IconButton(
                   onPressed: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ProfileNameEdit()));
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ProfileNameEdit(),
+                      ),
+                    );
                   },
-                  icon: Icon(Icons.arrow_forward_ios_sharp),
+                  icon: const Icon(Icons.arrow_forward_ios_sharp),
                 ),
               ],
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
           ],
         ),
       ),

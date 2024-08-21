@@ -1,13 +1,9 @@
-import 'dart:developer';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:rick_and_morty/features/auth/presentation/logic/bloc/auth_bloc.dart';
-import 'package:rick_and_morty/features/auth/presentation/widgets/common_elevated_button.dart';
-import 'package:rick_and_morty/internal/components/bottom_navbar.dart';
-import 'package:rick_and_morty/internal/components/common_text_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:rick_and_morty/internal/commons/common.dart';
+import '../logic/bloc/bloc.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -40,24 +36,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     });
   }
 
-  // @override
-  // void initState() {
-  //   registrationBloc.add(
-  //     RegisterEvent(
-  //       name: nameController.text,
-  //       surname: secondNameController.text,
-  //       patronym: lastNameController.text,
-  //       email: emailController.text,
-  //       password: passwordController.text,
-  //     ),
-  //   );
-  //   super.initState();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         leading: IconButton(
@@ -68,13 +49,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         ),
       ),
       body: Padding(
-        padding:  EdgeInsets.all(16.dm),
-        child: Center(
+        padding: EdgeInsets.all(16.r),
+        child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-               Text(
+              const Text(
                 'Создать аккаунт',
                 style: TextStyle(
                   fontSize: 40,
@@ -82,17 +63,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
               ),
               const CommonTextWidget(tittle: 'Name'),
-              TextFieldWidget(
+              CommonTextFieldWidget(
                 controller: nameController,
                 hintText: 'Name',
               ),
               const CommonTextWidget(tittle: 'Surname'),
-              TextFieldWidget(
+              CommonTextFieldWidget(
                 controller: secondNameController,
                 hintText: 'Surname',
               ),
               const CommonTextWidget(tittle: 'Lastname'),
-              TextFieldWidget(
+              CommonTextFieldWidget(
                 controller: lastNameController,
                 hintText: 'Lastname',
               ),
@@ -100,7 +81,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               const Divider(height: 5),
               const SizedBox(height: 10),
               const CommonTextWidget(tittle: 'Login'),
-              TextFieldWidget(
+              CommonTextFieldWidget(
                 controller: emailController,
                 hintText: 'Login',
                 prefixIcon: const Icon(Icons.person),
@@ -114,7 +95,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ? 'Минимум 6 символов'
                     : null,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
-
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: const Color(0xffF2F2F2),
@@ -147,45 +127,27 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => BottomNavBar(),
+                        builder: (context) => const BottomNavBar(),
                       ),
                     );
                   }
                 },
+                /// TODO: переименовать на CommonElevatedButton
                 child: ElevatedButtonWidget(
-                    onPressed: () {
-                      registrationBloc.add(
-                        RegisterEvent(
-                          email: emailController.text,
-                          password: passwordController.text,
-                        ),
-                      );
-                    },
-                    title: 'Create'),
+                  onPressed: () {
+                    registrationBloc.add(
+                      RegisterEvent(
+                        email: emailController.text,
+                        password: passwordController.text,
+                      ),
+                    );
+                  },
+                  title: 'Create',
+                ),
               ),
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class CommonTextWidget extends StatelessWidget {
-  final String tittle;
-
-  const CommonTextWidget({
-    super.key,
-    required this.tittle,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      tittle,
-      style: const TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.w500,
       ),
     );
   }

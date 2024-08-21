@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,11 +8,11 @@ import 'package:rick_and_morty/features/episodes/presentation/widgets/common_shi
 import 'package:rick_and_morty/internal/constants/utils/common_column_data.dart';
 import 'package:rick_and_morty/features/episodes/data/models/episode_image_model.dart';
 import 'package:rick_and_morty/features/episodes/presentation/screens/episodes_info_screen.dart';
-import 'package:rick_and_morty/internal/components/date_formatter.dart';
 import 'package:rick_and_morty/internal/constants/text_helper/text_helper.dart';
 import 'package:rick_and_morty/internal/constants/theme_helper/app_colors.dart';
 import 'package:rick_and_morty/internal/constants/utils/enum_funcs.dart';
 import 'package:rick_and_morty/internal/dependencies/get_it.dart';
+import '../../../../internal/commons/common.dart';
 
 class CharacterInfoScreen extends StatefulWidget {
   final int id;
@@ -73,10 +72,10 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
                 if (state is CharacterLoadingState) {
                   return ListView.separated(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemCount: 10,
                     itemBuilder: (context, index) {
-                      return CommonEpisodeShimmer();
+                      return const CommonEpisodeShimmer();
                     },
                     separatorBuilder: (context, index) {
                       return SizedBox(height: 20.h);
@@ -91,7 +90,7 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
                           characterBloc
                               .add(GetCharactersByIdEvent(id: widget.id));
                         },
-                        child: Text('Нажмите чтобы обновить')),
+                        child: const Text('Нажмите чтобы обновить')),
                   );
                 }
 
@@ -118,10 +117,13 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
                                 width: MediaQuery.of(context).size.width,
                                 child: BackdropFilter(
                                   filter: ImageFilter.blur(
-                                      sigmaX: 8.0, sigmaY: 0.0),
+                                    sigmaX: 8.0,
+                                    sigmaY: 0.0,
+                                  ),
                                   child: Container(
                                     decoration: BoxDecoration(
-                                        color: Colors.grey.withOpacity(0.1)),
+                                      color: Colors.grey.withOpacity(0.1),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -170,7 +172,7 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
                         SizedBox(height: 70.h),
                         Text(
                           state.result.name ?? '',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 34,
                             fontWeight: FontWeight.w400,
                           ),
@@ -181,9 +183,10 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
                                   state.result.status ?? Status.ALIVE) ??
                               '',
                           style: TextStyle(
-                              color: state.result.status == Status.ALIVE
-                                  ? AppColors.mainGreen
-                                  : AppColors.mainRed),
+                            color: state.result.status == Status.ALIVE
+                                ? AppColors.mainGreen
+                                : AppColors.mainRed,
+                          ),
                         ),
                         const SizedBox(height: 20),
                         SizedBox(
@@ -272,7 +275,7 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
                         ),
                         ListView.separated(
                           shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           itemCount: state.result.episode?.length ?? 0,
                           itemBuilder: (context, index) {
                             final url = imagesLocation.getNextImageUrl();
@@ -296,50 +299,54 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
                                     ),
                                     const SizedBox(width: 20),
                                     Expanded(
-                                      child: Container(
+                                      child: Align(
                                         alignment: Alignment.centerLeft,
-                                        height: 62.h,
-                                        width: 213.w,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Expanded(
-                                              child: Text(
-                                                state.episodeResult?[index]
-                                                        .episode ??
-                                                    '',
-                                                style:
-                                                    TextHelper.mainCharStatus,
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: Text(
-                                                state.episodeResult?[index]
-                                                        .name ??
-                                                    '',
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 15,
+                                        child: SizedBox(
+                                          height: 62.h,
+                                          width: 213.w,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  state.episodeResult?[index]
+                                                          .episode ??
+                                                      '',
+                                                  style:
+                                                      TextHelper.mainCharStatus,
                                                 ),
                                               ),
-                                            ),
-                                            SizedBox(height: 5.h),
-                                            Expanded(
-                                              child: Text(
-                                                dateConverter(state
-                                                        .episodeResult?[index]
-                                                        .created
-                                                        ?.millisecondsSinceEpoch ??
-                                                    0),
-                                                style: TextHelper.charSexText,
+                                              Expanded(
+                                                child: Text(
+                                                  state.episodeResult?[index]
+                                                          .name ??
+                                                      '',
+                                                  style: const TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 15,
+                                                  ),
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                              SizedBox(height: 5.h),
+                                              Expanded(
+                                                child: Text(
+                                                  dateConverter(
+                                                    state
+                                                            .episodeResult?[index]
+                                                            .created
+                                                            ?.millisecondsSinceEpoch ??
+                                                        0,
+                                                  ),
+                                                  style: TextHelper.charSexText,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
-                                    Spacer(),
+                                    const Spacer(),
                                     SizedBox(
                                       height: 24.h,
                                       width: 24.w,
@@ -355,8 +362,8 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
                                             ),
                                           );
                                         },
-                                        icon:
-                                            Icon(Icons.arrow_forward_ios_sharp),
+                                        icon: const Icon(
+                                            Icons.arrow_forward_ios_sharp),
                                       ),
                                     ),
                                   ],
@@ -372,7 +379,7 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
                     ),
                   );
                 }
-                return const SizedBox();
+                return const SizedBox.shrink();
               },
             ),
           ],
