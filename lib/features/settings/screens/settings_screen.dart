@@ -109,7 +109,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                   );
                 },
-                child: Text('Редактировать'),
                 style: ElevatedButton.styleFrom(
                   splashFactory: NoSplash.splashFactory,
                   shape: RoundedRectangleBorder(
@@ -121,6 +120,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   foregroundColor: const Color(0xff22A2BD),
                   minimumSize: const Size(335, 48),
                 ),
+                child:  Text('Редактировать'),
               ),
             ),
             const SizedBox(height: 30),

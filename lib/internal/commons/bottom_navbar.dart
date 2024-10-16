@@ -3,7 +3,6 @@ import 'package:rick_and_morty/features/characters/presentation/screens/all_char
 import 'package:rick_and_morty/features/episodes/presentation/screens/all_episodes_screen.dart';
 import 'package:rick_and_morty/features/location/presentation/screens/all_location_screen.dart';
 import 'package:rick_and_morty/features/settings/screens/settings_screen.dart';
-import 'package:rick_and_morty/internal/constants/theme_helper/app_colors.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
