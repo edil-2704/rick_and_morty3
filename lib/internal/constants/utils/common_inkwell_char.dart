@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:rick_and_morty/features/characters/presentation/widgets/to_list_view.dart';
 import 'package:rick_and_morty/internal/constants/text_helper/text_helper.dart';
-import 'package:rick_and_morty/internal/constants/theme_helper/app_colors.dart';
 import 'package:rick_and_morty/internal/constants/utils/enum_funcs.dart';
 
 class CommonCharInkwell extends StatelessWidget {
@@ -33,10 +32,10 @@ class CommonCharInkwell extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            height: 79.h,
-            width: 79.w,
+            height: 80.h,
+            width: 80.w,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(39.5.r),
+              borderRadius: BorderRadius.circular(40.r),
               image: DecorationImage(
                 image: NetworkImage(imageUrl),
               ),

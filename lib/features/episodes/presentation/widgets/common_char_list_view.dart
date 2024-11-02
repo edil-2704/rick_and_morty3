@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rick_and_morty/features/characters/data/models/characters_models.dart';
@@ -56,12 +55,12 @@ class CommonCharListView extends StatelessWidget {
                         Expanded(
                           child: Text(
                             statusConverter(
-                                state.characterResult?[index].status ??
-                                    Status.ALIVE) ??
+                                    state.characterResult?[index].status ??
+                                        Status.ALIVE) ??
                                 '',
                             style: TextStyle(
                                 color: state.characterResult?[index].status ==
-                                    Status.ALIVE
+                                        Status.ALIVE
                                     ? AppColors.mainGreen
                                     : AppColors.mainRed),
                           ),
@@ -78,9 +77,9 @@ class CommonCharListView extends StatelessWidget {
                         SizedBox(height: 5.h),
                         Expanded(
                             child: Text(
-                              '${speciesConverter(state.characterResult?[index].species ?? Species.HUMAN) ?? ''}, ${genderConverter(state.characterResult?[index].gender ?? Gender.UNKNOWN) ?? ''}',
-                              style: TextHelper.mainCharGender,
-                            )),
+                          '${speciesConverter(state.characterResult?[index].species ?? Species.HUMAN) ?? ''}, ${genderConverter(state.characterResult?[index].gender ?? Gender.UNKNOWN) ?? ''}',
+                          style: TextHelper.mainCharGender,
+                        )),
                       ],
                     ),
                   ),
@@ -90,7 +89,6 @@ class CommonCharListView extends StatelessWidget {
                   height: 24.h,
                   width: 24.w,
                   child: IconButton(
-
                     onPressed: () {
                       Navigator.push(
                         context,

@@ -32,7 +32,7 @@ class _CommonLocationCardState extends State<CommonLocationCard> {
       child: ListView.separated(
         shrinkWrap: true,
         controller: widget.scrollController,
-        itemCount: widget.locationsList.length ?? 0,
+        itemCount: widget.locationsList.length,
         itemBuilder: (context, index) {
           final url = imagesLocation.getNextImageUrl();
 
@@ -71,8 +71,9 @@ class _CommonLocationCardState extends State<CommonLocationCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ClipRRect(
-                          borderRadius: const BorderRadius.vertical(
-                              top: Radius.circular(16)),
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(16.r),
+                          ),
                           child: Image.network(
                             url,
                             fit: BoxFit.cover,
@@ -91,7 +92,7 @@ class _CommonLocationCardState extends State<CommonLocationCard> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const SizedBox(height: 8),
+                              SizedBox(height: 8.h),
                               Text(
                                 '${widget.locationsList[index].type ?? ''} , ${widget.locationsList[index].dimension ?? ''}',
                                 style: TextHelper.charSexText,
@@ -108,7 +109,7 @@ class _CommonLocationCardState extends State<CommonLocationCard> {
           );
         },
         separatorBuilder: (context, index) {
-          return const SizedBox(height: 20);
+          return SizedBox(height: 20.h);
         },
       ),
     );

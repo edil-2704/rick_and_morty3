@@ -96,7 +96,7 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
 
                 if (state is CharacterLoadedInfoState) {
                   return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.h),
+                    padding: EdgeInsets.symmetric(horizontal: 16.r),
                     child: Column(
                       children: [
                         SizedBox(
@@ -333,7 +333,8 @@ class _CharacterInfoScreenState extends State<CharacterInfoScreen> {
                                                 child: Text(
                                                   dateConverter(
                                                     state
-                                                            .episodeResult?[index]
+                                                            .episodeResult?[
+                                                                index]
                                                             .created
                                                             ?.millisecondsSinceEpoch ??
                                                         0,

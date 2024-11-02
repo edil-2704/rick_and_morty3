@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rick_and_morty/features/characters/data/models/characters_models.dart';
-import 'package:rick_and_morty/features/characters/presentation/logic/bloc/character_bloc.dart';
 import 'package:rick_and_morty/features/characters/presentation/screens/character_info_screen.dart';
 import 'package:rick_and_morty/internal/constants/utils/common_progress_indicator.dart';
 
@@ -60,10 +57,10 @@ class _ToGridViewSeparatedState extends State<ToGridViewSeparated> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  height: 122,
-                  width: 120,
+                  height: 122.h,
+                  width: 120.w,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(61),
+                    borderRadius: BorderRadius.circular(61.r),
                     image: DecorationImage(
                       image: NetworkImage(
                         widget.charactersList[index].image ?? '',
@@ -102,4 +99,3 @@ class _ToGridViewSeparatedState extends State<ToGridViewSeparated> {
     );
   }
 }
-

@@ -29,9 +29,8 @@ class _ToListViewSeparatedState extends State<ToListViewSeparated> {
     return ListView.separated(
       controller: widget.scrollController,
       shrinkWrap: true,
-      itemCount: widget.charactersList.length ?? 0,
+      itemCount: widget.charactersList.length,
       itemBuilder: (context, index) {
-
         if (index >= widget.charactersList.length - 1) {
           return Padding(
             padding: EdgeInsets.symmetric(vertical: 5.h),

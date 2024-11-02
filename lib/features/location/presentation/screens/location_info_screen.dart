@@ -2,14 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rick_and_morty/features/characters/data/models/characters_models.dart';
-import 'package:rick_and_morty/features/characters/data/repository/char_repository_impl.dart';
-import 'package:rick_and_morty/features/characters/domain/char_use_case/char_use_case.dart';
 import 'package:rick_and_morty/features/characters/presentation/screens/character_info_screen.dart';
 import 'package:rick_and_morty/features/characters/presentation/widgets/common_chars_shimmer.dart';
-import 'package:rick_and_morty/features/episodes/presentation/widgets/common_shimmer.dart';
 import 'package:rick_and_morty/features/location/data/models/location_image_model.dart';
-import 'package:rick_and_morty/features/location/data/repository/location_repository_impl.dart';
-import 'package:rick_and_morty/features/location/domain/location_use_case/location_use_case.dart';
 import 'package:rick_and_morty/features/location/presentation/logic/bloc/location_bloc.dart';
 import 'package:rick_and_morty/internal/constants/utils/common_inkwell_char.dart';
 import 'package:rick_and_morty/internal/constants/utils/enum_funcs.dart';
@@ -54,7 +49,7 @@ class _LocationInfoScreenState extends State<LocationInfoScreen> {
                 Image.network(
                   url,
                   fit: BoxFit.cover,
-                  width: 375.w,
+                  width: 390.w,
                   height: 250.h,
                 ),
                 Positioned(
@@ -123,7 +118,7 @@ class _LocationInfoScreenState extends State<LocationInfoScreen> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(height: 4),
+                         SizedBox(height: 4.h),
                         Text(
                           ' ${state.locationResult.type ?? ''} , ${state.locationResult.type ?? ''}',
                           style: TextStyle(
@@ -138,7 +133,7 @@ class _LocationInfoScreenState extends State<LocationInfoScreen> {
                             fontSize: 16,
                           ),
                         ),
-                        SizedBox(height: 24),
+                        SizedBox(height: 24.h),
                         Text(
                           'Персонажи',
                           style: TextStyle(
@@ -146,7 +141,7 @@ class _LocationInfoScreenState extends State<LocationInfoScreen> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(height: 16),
+                         SizedBox(height: 16.h),
                         ListView.separated(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),

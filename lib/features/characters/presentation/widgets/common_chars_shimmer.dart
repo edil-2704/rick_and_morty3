@@ -14,11 +14,11 @@ class CommonCharsShimmer extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            height: 79.h,
-            width: 79.w,
+            height: 80.h,
+            width: 80.w,
             decoration: BoxDecoration(
               color: Colors.amber,
-              borderRadius: BorderRadius.circular(39.5.r),
+              borderRadius: BorderRadius.circular(40.r),
             ),
           ),
           SizedBox(width: 20.w),

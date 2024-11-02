@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:rick_and_morty/features/characters/data/repository/char_repository_impl.dart';
-import 'package:rick_and_morty/features/characters/domain/char_use_case/char_use_case.dart';
 import 'package:rick_and_morty/features/location/presentation/widgets/common_location_shimmer.dart';
 import 'package:rick_and_morty/features/location/data/models/location_image_model.dart';
 import 'package:rick_and_morty/features/location/data/models/location_model.dart';
-import 'package:rick_and_morty/features/location/data/repository/location_repository_impl.dart';
-import 'package:rick_and_morty/features/location/domain/location_use_case/location_use_case.dart';
 import 'package:rick_and_morty/features/location/presentation/logic/bloc/location_bloc.dart';
 import 'package:rick_and_morty/features/location/presentation/widgets/common_location_card.dart';
 import 'package:rick_and_morty/internal/constants/text_helper/text_helper.dart';
@@ -87,7 +83,7 @@ class _AllLocationScreenState extends State<AllLocationScreen> {
                       backgroundColor: Theme.of(context).colorScheme.surface,
                       content: SizedBox(
                         height: 761.h,
-                        width: 375.w,
+                        width: 400.w,
                         child: Column(
                           children: [
                             Text('Status'),

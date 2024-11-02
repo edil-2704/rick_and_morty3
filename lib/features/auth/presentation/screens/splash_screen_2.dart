@@ -31,11 +31,11 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Container(
-        height: 890.h,
+        height: 1000.h,
         width: 375.w,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/rm.jpg'),
+            image: AssetImage('assets/images/splash.png'),
             fit: BoxFit.cover,
           ),
         ),

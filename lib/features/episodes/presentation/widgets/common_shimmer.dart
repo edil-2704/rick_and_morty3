@@ -15,8 +15,8 @@ class CommonEpisodeShimmer extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            height: 79.h,
-            width: 79.w,
+            height: 80.h,
+            width: 80.w,
             decoration: BoxDecoration(
               color: Colors.amber,
               borderRadius: BorderRadius.circular(15),
