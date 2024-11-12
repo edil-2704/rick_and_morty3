@@ -34,7 +34,7 @@ class _ToGridViewSeparatedState extends State<ToGridViewSeparated> {
         mainAxisSpacing: 10,
       ),
       shrinkWrap: true,
-      itemCount: widget.charactersList.length ?? 0,
+      itemCount: widget.charactersList.length,
       itemBuilder: (context, index) {
         if (index >= widget.charactersList.length - 1) {
           return CommonProgressIndicator();

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CommonTextFieldWidget extends StatefulWidget {
+class CommonTextFieldWidget extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final TextInputType? textInputType;
@@ -21,25 +21,21 @@ class CommonTextFieldWidget extends StatefulWidget {
   });
 
   @override
-  State<CommonTextFieldWidget> createState() => _CommonTextFieldWidgetState();
-}
-
-class _CommonTextFieldWidgetState extends State<CommonTextFieldWidget> {
-  @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: widget.controller,
-      keyboardType: widget.textInputType,
+      controller: controller,
+      keyboardType: textInputType,
       autocorrect: false,
       decoration: InputDecoration(
-          fillColor:  const Color(0xffF2F2F2),
-          hintText: widget.hintText,
-          prefixIcon: widget.prefixIcon,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12.r),
-            borderSide: BorderSide.none,
-          ),
-          filled: true),
+        fillColor: const Color(0xffF2F2F2),
+        hintText: hintText,
+        prefixIcon: prefixIcon,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.r),
+          borderSide: BorderSide.none,
+        ),
+        filled: true,
+      ),
     );
   }
 }
